@@ -3,26 +3,40 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         
-     // 1) 키보드 입력을 처리할 객체
+        String[] names = new String[100];
+        String[] emails = new String[100];
+        String[] passwords = new String[100];
+        //  각 정보를 100개씩 저장하는 배열 생성.
+        
+        int index = 0;
+        //  배열들의 인덱스를 한번에 관리.
+        
         Scanner keyIn = new Scanner(System.in);
         
-        // 2) 사용자로부터 회원 정보 입력 받아 출력하
         while (true) {
+            //  입력받아 각 배열에 저장.
             System.out.print("Name : ");
-            String name = keyIn.nextLine();
+            names[index] = keyIn.nextLine();
             
             System.out.print("E-Mail : ");
-            String email = keyIn.nextLine();
+            emails[index] = keyIn.nextLine();
             
             System.out.print("Password : ");
-            String password = keyIn.nextLine();
-            System.out.printf("\n%s, %s, %s\n", name, email, password);
+            passwords[index] = keyIn.nextLine();
+            
+            index++;
             
             System.out.print("\nContinue? [Y/n] ");
-            //  y없이 엔터만 쳐도 루프를 탈출하지 않으면 Y
             String answer = keyIn.nextLine();
             if (answer.toLowerCase().equals("n"))
                 break;
         }
+        for(int i = 0; i < index; i++) {
+            System.out.printf("\n%s, %s, %s\n",
+                    names[i], emails[i], passwords[i]);
+            
+        }
+        
+        keyIn.close();
     }
 }
