@@ -1,20 +1,38 @@
 import java.util.Scanner;
 
 public class App {
+    
+    static String[] names = new String[100];
+    static String[] emails = new String[100];
+    static String[] passwords = new String[100];
+    static int index = 0;
+    
+    static Scanner keyIn = new Scanner(System.in);
+    
     public static void main(String[] args) {
         
-        String[] names = new String[100];
-        String[] emails = new String[100];
-        String[] passwords = new String[100];
-        //  각 정보를 100개씩 저장하는 배열 생성.
+        inputMembers();
         
-        int index = 0;
-        //  배열들의 인덱스를 한번에 관리.
+        printMembers();
         
-        Scanner keyIn = new Scanner(System.in);
+        keyIn.close();
+    }
+    /*  메소드로 묶는것을 리팩토링이라고 함.
+        alt + cmd + m
         
+        static이 여기저기 붙어 있는 이유?
+        main에서 인스턴스를 생성하지 않고 메소드만 불러 쓰고 있고,
+        static method에서 사용되기 위해 배열 또한 static임.
+    */
+    static void printMembers() {
+        for(int i = 0; i < index; i++) {
+            System.out.printf("\n%s, %s, %s\n",
+                    names[i], emails[i], passwords[i]);
+        }
+    }
+    
+    static void inputMembers() {
         while (true) {
-            //  입력받아 각 배열에 저장.
             System.out.print("Name : ");
             names[index] = keyIn.nextLine();
             
@@ -31,12 +49,5 @@ public class App {
             if (answer.toLowerCase().equals("n"))
                 break;
         }
-        for(int i = 0; i < index; i++) {
-            System.out.printf("\n%s, %s, %s\n",
-                    names[i], emails[i], passwords[i]);
-            
-        }
-        
-        keyIn.close();
     }
 }
