@@ -1,6 +1,10 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## summary (tag: v0.4)
+
+- 클래스 활용
+
 ## summary (tag: v0.3)
 
 - 메서드 활용하여 리팩토링

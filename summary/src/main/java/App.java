@@ -2,9 +2,38 @@ import java.util.Scanner;
 
 public class App {
     
-    static String[] names = new String[100];
-    static String[] emails = new String[100];
-    static String[] passwords = new String[100];
+    // 여러 속성의 값을 관리하기 쉽도록,
+    //  클래스(사용자 정의 데이터 타입)를 만들어 사용한다.
+    static class Member {
+        protected String name;
+        protected String email;
+        protected String password;
+        
+        
+        // 인스턴스의 메모리를 다루는
+        //  setter/getter   = operator=accessor=property=message
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getEmail() {
+            return email;
+        }
+        public void setEmail(String email) {
+            this.email = email;
+        }
+        public String getPassword() {
+            return password;
+        }
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    }
+    
+    static Member[] members = new Member[100];
+    //  Member 객체를 저장하는 배열.
     static int index = 0;
     
     static Scanner keyIn = new Scanner(System.in);
@@ -17,32 +46,29 @@ public class App {
         
         keyIn.close();
     }
-    /*  메소드로 묶는것을 리팩토링이라고 함.
-        alt + cmd + m
-        
-        static이 여기저기 붙어 있는 이유?
-        main에서 인스턴스를 생성하지 않고 메소드만 불러 쓰고 있고,
-        static method에서 사용되기 위해 배열 또한 static임.
-    */
+
     static void printMembers() {
         for(int i = 0; i < index; i++) {
             System.out.printf("\n%s, %s, %s\n",
-                    names[i], emails[i], passwords[i]);
+                    members[i].getName(),
+                    members[i].getEmail(),
+                    members[i].getPassword());
         }
     }
     
     static void inputMembers() {
         while (true) {
+            Member m = new Member();
             System.out.print("Name : ");
-            names[index] = keyIn.nextLine();
+            m.setName(keyIn.nextLine());
             
             System.out.print("E-Mail : ");
-            emails[index] = keyIn.nextLine();
+            m.setEmail(keyIn.nextLine());
             
             System.out.print("Password : ");
-            passwords[index] = keyIn.nextLine();
+            m.setPassword(keyIn.nextLine());
             
-            index++;
+            members[index++] = m;
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
