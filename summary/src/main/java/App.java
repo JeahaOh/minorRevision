@@ -39,21 +39,68 @@ public class App {
     static Scanner keyIn = new Scanner(System.in);
     
     public static void main(String[] args) {
-        
-        inputMembers();
-        
-        printMembers();
-        
+        while(true) {
+            String menu = promptMenu();
+            //  변수를 메소드를 실행해서 가져온다. 신박.
+            
+            if(menu.equals("1")) {
+                serviceStudentMenu();
+            }   else if(menu.equals("0")) {
+                System.out.println("Bye!");
+                break;
+            }
+        }
         keyIn.close();
+    }
+
+    private static void serviceStudentMenu() {
+        while(true) {
+            System.out.print("\nStudent Management> ");
+            String command = keyIn.nextLine();
+            if(command.equals("list")) {
+                printMembers();
+            }   else if(command.equals("add")) {
+                inputMembers();
+            }   else if(command.equals("quit")) {
+                break;
+            }   else {
+                System.out.println("Invalid Command..");
+            }
+        }
+    }
+
+    private static String promptMenu() {
+        System.out.println("[MENU]");
+        System.out.println("1. Student Info Management");
+        System.out.println("2. Teacher Info Management");
+        System.out.println("3. Manager Info Management");
+        System.out.println("0. EXIT");
+        
+        while (true) {
+            System.out.print("MENU No.> ");
+            
+            String menu = keyIn.nextLine();
+            
+            switch (menu) {
+            case "1":
+            case "2":
+            case "3":
+            case "0":
+                return menu;
+            default:
+                System.out.println("Invalid No.");
+            }
+        }   // 실질적 메인 메뉴. switch문의 형태와 입력받은 변수를 고대로 return한다는것 인지!
     }
 
     static void printMembers() {
         for(int i = 0; i < index; i++) {
-            System.out.printf("\n%s, %s, %s\n",
+            System.out.printf("\n%s, %s, %s",
                     members[i].getName(),
                     members[i].getEmail(),
                     members[i].getPassword());
         }
+        System.out.println();
     }
     
     static void inputMembers() {
