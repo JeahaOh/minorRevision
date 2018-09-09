@@ -4,28 +4,26 @@ import java.util.Scanner;
 
 import summary.java.cms.domain.Teacher;
 
-public class TeacherController {
-    public Scanner keyIn;
+public class TeacherController implements Controller {
     private List<Teacher> teachers;
     
-    public TeacherController(Scanner keyIn, List<Teacher> teachers) {
-        this.keyIn = keyIn;
+    public TeacherController(List<Teacher> teachers) {
         this.teachers = teachers;
         init();
     }
 
-    public void serviceTeacherMenu() {
+    public void service(Scanner keyIn) {
         while(true) {
             System.out.print("\nTeacher Management> ");
             String command = keyIn.nextLine();
             if(command.equals("list")) {
                 printTeachers();
             }   else if(command.equals("add")) {
-                inputTeachers();
+                inputTeachers(keyIn);
             }   else if(command.equals("delete")) {
-                deleteTeacher();
+                deleteTeacher(keyIn);
             }   else if(command.equals("detail")) {
-                detailTeacher();
+                detailTeacher(keyIn);
             }   else if(command.equals("quit")) {
                 break;
             }   else {
@@ -34,7 +32,7 @@ public class TeacherController {
         }
     }
     
-    private void inputTeachers() {
+    private void inputTeachers(Scanner keyIn) {
         while (true) {
             Teacher t = new Teacher();
             System.out.print("Name : ");
@@ -81,7 +79,7 @@ public class TeacherController {
         System.out.println();
     }
     
-    private void deleteTeacher() {
+    private void deleteTeacher(Scanner keyIn) {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
@@ -94,7 +92,7 @@ public class TeacherController {
         System.out.println("delete No...");
     }
     
-    private void detailTeacher() {
+    private void detailTeacher(Scanner keyIn) {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
