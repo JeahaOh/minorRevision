@@ -1,3 +1,4 @@
+package summary.java.cms.domain;
 public class Member {
     protected String name;
     protected String email;

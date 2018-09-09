@@ -1,8 +1,11 @@
+package summary.java.cms.control;
 import java.util.Scanner;
+
+import summary.java.cms.domain.Member;
 
 public class ManagerController {
     
-    static Scanner keyIn;
+    public static Scanner keyIn;
     static Manager[] managers = new Manager[100];
     static int managerIndex = 0;
     
@@ -25,7 +28,7 @@ public class ManagerController {
         }
     }
     
-    static void serviceManagerMenu() {
+    public static void serviceManagerMenu() {
         while(true) {
             System.out.print("\nManager Management> ");
             String command = keyIn.nextLine();
@@ -42,7 +45,7 @@ public class ManagerController {
     }
     
 
-    static void inputManagers() {
+    private static void inputManagers() {
         while (true) {
             Manager m = new Manager();
             System.out.print("Name : ");
@@ -69,7 +72,7 @@ public class ManagerController {
         }
     }
 
-    static void printManagers() {
+    private static void printManagers() {
         int count = 0;
         System.out.print("Name\tEmail\t\tPassword\tTel\t\tPosition");
         for(Manager m : managers) {

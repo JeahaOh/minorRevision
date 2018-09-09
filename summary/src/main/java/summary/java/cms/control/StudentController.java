@@ -1,7 +1,11 @@
+package summary.java.cms.control;
 import java.util.Scanner;
 
+import summary.java.cms.domain.Member;
+
+
 public class StudentController {
-    static Scanner keyIn;
+    public static Scanner keyIn;
     static Student[] students = new Student[100];
     static int studentIndex = 0;
     
@@ -38,7 +42,7 @@ public class StudentController {
         }
     }
 
-    static void serviceStudentMenu() {
+    public static void serviceStudentMenu() {
         while(true) {
             System.out.print("\nStudent Management> ");
             String command = keyIn.nextLine();
@@ -56,7 +60,7 @@ public class StudentController {
         }
     }
 
-    static void printStudents() {
+    private static void printStudents() {
         int count = 0;
         System.out.print("Name\tEmail\t\tPassword\tTel\tSchool \t Major\tGraduate");
         for(Student s : students) {
@@ -76,7 +80,7 @@ public class StudentController {
     }
 
     
-    static void inputStudents() {
+    private static void inputStudents() {
         while (true) {
             Student s = new Student();
             System.out.print("Name : ");
