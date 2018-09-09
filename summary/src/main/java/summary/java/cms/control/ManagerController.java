@@ -1,8 +1,8 @@
 package summary.java.cms.control;
+import java.util.List;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Manager;
-import summary.java.cms.util.List;
 
 public class ManagerController {
     public Scanner keyIn;
