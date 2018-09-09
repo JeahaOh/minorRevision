@@ -2,14 +2,16 @@ package summary.java.cms.control;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Teacher;
-import summary.java.cms.util.LinkedList;
+import summary.java.cms.util.List;
 
 public class TeacherController {
     public Scanner keyIn;
-    private LinkedList<Teacher> teachers = new LinkedList<>();
+    private List<Teacher> teachers;
     
-    public TeacherController(Scanner keyIn) {
+    public TeacherController(Scanner keyIn, List<Teacher> teachers) {
         this.keyIn = keyIn;
+        this.teachers = teachers;
+        init();
     }
 
     public void serviceTeacherMenu() {
@@ -110,7 +112,7 @@ public class TeacherController {
         System.out.printf("Subject : %s\n", teacher.getSubject());
     }
     
-    {
+    private void init(){
         Teacher t = new Teacher();
         t.setName("qwer");
         t.setEmail("aqwer@asdf.com");

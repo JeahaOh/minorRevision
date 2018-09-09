@@ -2,16 +2,18 @@ package summary.java.cms.control;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Manager;
-import summary.java.cms.util.LinkedList;
+import summary.java.cms.util.List;
 
 public class ManagerController {
     public Scanner keyIn;
-    private LinkedList<Manager> managers = new LinkedList<>();
+    private List<Manager> managers;
     
-    public ManagerController(Scanner keyIn) {
+    public ManagerController(Scanner keyIn, List<Manager> managers) {
         this.keyIn = keyIn;
+        this.managers = managers;
+        init();
     }
-    
+
     public void serviceManagerMenu() {
         while(true) {
             System.out.print("\nManager Management> ");
@@ -105,7 +107,7 @@ public class ManagerController {
         System.out.printf("Position : %s\n", manager.getPosition());
     }
     
-    {
+    private void init(){
         Manager m = new Manager();
         m.setName("a");
         m.setEmail("a@asdf.com");

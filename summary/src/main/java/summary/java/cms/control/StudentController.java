@@ -2,15 +2,17 @@ package summary.java.cms.control;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Student;
-import summary.java.cms.util.LinkedList;
+import summary.java.cms.util.List;
 
 
 public class StudentController {
     public Scanner keyIn;
-    private LinkedList<Student> students = new LinkedList<>();
+    private List<Student> students;
     
-    public StudentController(Scanner keyIn) {
+    public StudentController(Scanner keyIn, List<Student> students) {
         this.keyIn = keyIn;
+        this.students = students;
+        init();
     }
 
     public void serviceStudentMenu() {
@@ -116,7 +118,7 @@ public class StudentController {
         System.out.printf("Graduate : %s\n", student.isGraduate());
     }
     
-    {
+    private void init(){
         Student s = new Student();
         s.setName("a");
         s.setEmail("a@asdf.com");

@@ -1,6 +1,11 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## java110-project (tag: v1.1)
+
+- 인터페이스 적용
+- 의존 객체 주입(Dependency Injection; DI) 적용
+
 ## tag: v1.0
 
 - LinkedList 구동 원리 및 적용
