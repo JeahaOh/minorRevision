@@ -2,11 +2,11 @@ package summary.java.cms.control;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Manager;
-import summary.java.cms.util.ArrayList;
+import summary.java.cms.util.LinkedList;
 
 public class ManagerController {
     public Scanner keyIn;
-    private ArrayList<Manager> managers = new ArrayList<>();
+    private LinkedList<Manager> managers = new LinkedList<>();
     
     public ManagerController(Scanner keyIn) {
         this.keyIn = keyIn;

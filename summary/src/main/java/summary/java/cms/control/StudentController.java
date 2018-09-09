@@ -2,12 +2,12 @@ package summary.java.cms.control;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Student;
-import summary.java.cms.util.ArrayList;
+import summary.java.cms.util.LinkedList;
 
 
 public class StudentController {
     public Scanner keyIn;
-    private ArrayList<Student> students = new ArrayList<>();
+    private LinkedList<Student> students = new LinkedList<>();
     
     public StudentController(Scanner keyIn) {
         this.keyIn = keyIn;
