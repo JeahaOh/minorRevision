@@ -6,11 +6,8 @@ import summary.java.cms.control.TeacherController;
 
 public class App {
     /*
-    List class들 통합 시킴.
-    get method 사용시
-    List에 어떤 객체가 있는지 확인 시켜주기 위해 명시적으로 컴파일러에게 알려줌.
-    static 키워드를 지워버리고, 생성자를 통해 객체 생성,
-    Scanner 객체를 전달함.
+    ArrayList class에 Generic 사용으로
+    명시적으로 데이터 타입을 표현한것을 떼어줌. 
     */
     
     static Scanner keyIn = new Scanner(System.in);

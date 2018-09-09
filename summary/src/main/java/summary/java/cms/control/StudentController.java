@@ -7,7 +7,7 @@ import summary.java.cms.util.ArrayList;
 
 public class StudentController {
     public Scanner keyIn;
-    private ArrayList students = new ArrayList();
+    private ArrayList<Student> students = new ArrayList<>();
     
     public StudentController(Scanner keyIn) {
         this.keyIn = keyIn;
@@ -69,7 +69,7 @@ public class StudentController {
     private void printStudents() {
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\tSchool \t Major\tGraduate");
         for(int i = 0; i < students.size(); i++) {
-            Student s = (Student) students.get(i);
+            Student s = students.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s \t%s \t%b",
                     i,
                     s.getName(),
@@ -105,7 +105,7 @@ public class StudentController {
             System.out.println("Invalid No.");
             return;
         }
-        Student student = (Student) students.get(no);
+        Student student = students.get(no);
         
         System.out.printf("\nName : %s\n", student.getName());
         System.out.printf("E-Mail : %s\n", student.getEmail());

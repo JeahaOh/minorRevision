@@ -6,7 +6,7 @@ import summary.java.cms.util.ArrayList;
 
 public class TeacherController {
     public Scanner keyIn;
-    private ArrayList teachers = new ArrayList();
+    private ArrayList<Teacher> teachers = new ArrayList<>();
     
     public TeacherController(Scanner keyIn) {
         this.keyIn = keyIn;
@@ -65,7 +65,7 @@ public class TeacherController {
     private void printTeachers() {
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\t\tPay \t Subject");
         for(int i = 0; i < teachers.size(); i++) {
-            Teacher t = (Teacher) teachers.get(i);
+            Teacher t = teachers.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%d \t[%s]",
                     i,
                     t.getName(),
@@ -100,7 +100,7 @@ public class TeacherController {
             System.out.println("Invalid No.");
             return;
         }
-        Teacher teacher = (Teacher) teachers.get(no);
+        Teacher teacher = teachers.get(no);
         
         System.out.printf("\nName : %s\n", teacher.getName());
         System.out.printf("E-Mail : %s\n", teacher.getEmail());

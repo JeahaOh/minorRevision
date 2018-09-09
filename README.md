@@ -1,6 +1,10 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## java110-project (tag: v0.9)
+
+- 제네릭 활용법
+
 ## tag: v0.8
 
 - 목록을 다루는 클래스들을 리팩토링하기

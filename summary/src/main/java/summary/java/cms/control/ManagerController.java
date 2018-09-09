@@ -6,7 +6,7 @@ import summary.java.cms.util.ArrayList;
 
 public class ManagerController {
     public Scanner keyIn;
-    private ArrayList managers = new ArrayList();
+    private ArrayList<Manager> managers = new ArrayList<>();
     
     public ManagerController(Scanner keyIn) {
         this.keyIn = keyIn;
