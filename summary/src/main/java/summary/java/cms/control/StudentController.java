@@ -1,4 +1,5 @@
 package summary.java.cms.control;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -6,10 +7,10 @@ import summary.java.cms.domain.Student;
 
 
 public class StudentController implements Controller {
-    private List<Student> students;
+    public String name = "1";
+    private List<Student> students = new LinkedList<>();
     
-    public StudentController(List<Student> students) {
-        this.students = students;
+    public StudentController() {
         init();
     }
 

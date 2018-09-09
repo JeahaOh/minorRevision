@@ -1,14 +1,15 @@
 package summary.java.cms.control;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 import summary.java.cms.domain.Teacher;
 
 public class TeacherController implements Controller {
-    private List<Teacher> teachers;
+    public String name = "2";
+    private List<Teacher> teachers = new LinkedList<>();
     
-    public TeacherController(List<Teacher> teachers) {
-        this.teachers = teachers;
+    public TeacherController() {
         init();
     }
 

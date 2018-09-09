@@ -1,6 +1,12 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## tag: v1.4
+
+- 리플렉션 API 활용
+- File 클래스로 디렉토리 및 파일 다루기
+- 미니 IoC 컨테이너 작성
+
 ## tag: v1.3
 
 - Controller 인터페이스 활용
