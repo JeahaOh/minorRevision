@@ -1,14 +1,19 @@
 package summary.java.cms.control;
 import java.util.Scanner;
 
-import summary.java.cms.dao.StudentList;
 import summary.java.cms.domain.Student;
+import summary.java.cms.util.ArrayList;
 
 
 public class StudentController {
-    public static Scanner keyIn;
+    public Scanner keyIn;
+    private ArrayList students = new ArrayList();
     
-    public static void serviceStudentMenu() {
+    public StudentController(Scanner keyIn) {
+        this.keyIn = keyIn;
+    }
+
+    public void serviceStudentMenu() {
         while(true) {
             System.out.print("\nStudent Management> ");
             String command = keyIn.nextLine();
@@ -28,7 +33,7 @@ public class StudentController {
         }
     }
     
-    private static void inputStudents() {
+    private void inputStudents() {
         while (true) {
             Student s = new Student();
             System.out.print("Name : ");
@@ -52,7 +57,7 @@ public class StudentController {
             System.out.print("Graduate : ");
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
             
-            StudentList.add(s);
+            students.add(s);
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -61,10 +66,10 @@ public class StudentController {
         }
     }
 
-    private static void printStudents() {
+    private void printStudents() {
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\tSchool \t Major\tGraduate");
-        for(int i = 0; i < StudentList.size(); i++) {
-            Student s = StudentList.get(i);
+        for(int i = 0; i < students.size(); i++) {
+            Student s = (Student) students.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s \t%s \t%b",
                     i,
                     s.getName(),
@@ -79,28 +84,28 @@ public class StudentController {
         System.out.println();
     }
     
-    private static void deleteStudent() {
+    private void deleteStudent() {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= StudentList.size()) {
+        if (no < 0 || no >= students.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        StudentList.remove(no);
+        students.remove(no);
         
         System.out.println("delete No...");
     }
     
-    private static void detailStudent() {
+    private void detailStudent() {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= StudentList.size()) {
+        if (no < 0 || no >= students.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        Student student = StudentList.get(no);
+        Student student = (Student) students.get(no);
         
         System.out.printf("\nName : %s\n", student.getName());
         System.out.printf("E-Mail : %s\n", student.getEmail());
@@ -111,7 +116,7 @@ public class StudentController {
         System.out.printf("Graduate : %s\n", student.isGraduate());
     }
     
-    static {
+    {
         Student s = new Student();
         s.setName("a");
         s.setEmail("a@asdf.com");
@@ -119,7 +124,7 @@ public class StudentController {
         s.setTel("01010203404");
         s.setSchool("ASDF University");
         s.setMajor("JAVA");
-        StudentList.add(s);
+        students.add(s);
         
         s = new Student();
         s.setName("b");
@@ -129,7 +134,7 @@ public class StudentController {
         s.setSchool("ASDF University");
         s.setMajor("C++");
         s.setGraduate(true);
-        StudentList.add(s);
+        students.add(s);
         
         s = new Student();
         s.setName("c");
@@ -138,7 +143,7 @@ public class StudentController {
         s.setTel("01089021020");
         s.setSchool("ASDF University");
         s.setMajor("JS");
-        StudentList.add(s);
+        students.add(s);
         
         s = new Student();
         s.setName("d");
@@ -148,6 +153,6 @@ public class StudentController {
         s.setSchool("ASDF University");
         s.setMajor("C++");
         s.setGraduate(true);
-        StudentList.add(s);
+        students.add(s);
     }
 }

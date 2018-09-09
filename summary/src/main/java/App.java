@@ -5,28 +5,31 @@ import summary.java.cms.control.StudentController;
 import summary.java.cms.control.TeacherController;
 
 public class App {
-    /*  
-        Controller class 들의 부피가 커져서,
-        객체 클래스(domain)와 객체 관리 클래스(control), 객체 저장공간 클래스(List)로
-        각각 분리시킴.
+    /*
+    List class들 통합 시킴.
+    get method 사용시
+    List에 어떤 객체가 있는지 확인 시켜주기 위해 명시적으로 컴파일러에게 알려줌.
+    static 키워드를 지워버리고, 생성자를 통해 객체 생성,
+    Scanner 객체를 전달함.
     */
+    
     static Scanner keyIn = new Scanner(System.in);
     
     public static void main(String[] args) {
         
-        StudentController.keyIn = keyIn;
-        TeacherController.keyIn = keyIn;
-        ManagerController.keyIn = keyIn;
+        StudentController sc = new StudentController(keyIn);
+        TeacherController tc = new TeacherController(keyIn);
+        ManagerController mc = new ManagerController(keyIn);
         
         while(true) {
             String menu = promptMenu();
             
             if(menu.equals("1")) {
-                StudentController.serviceStudentMenu();
+                sc.serviceStudentMenu();
             }   else if(menu.equals("2")){
-                TeacherController.serviceTeacherMenu();
+                tc.serviceTeacherMenu();
             }   else if(menu.equals("3")){
-                ManagerController.serviceManagerMenu();
+                mc.serviceManagerMenu();
             }   else if(menu.equals("0")) {
                 System.out.println("Bye!");
                 break;

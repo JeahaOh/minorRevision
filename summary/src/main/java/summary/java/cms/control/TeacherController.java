@@ -1,13 +1,18 @@
 package summary.java.cms.control;
 import java.util.Scanner;
 
-import summary.java.cms.dao.TeacherList;
 import summary.java.cms.domain.Teacher;
+import summary.java.cms.util.ArrayList;
 
 public class TeacherController {
-    public static Scanner keyIn;
+    public Scanner keyIn;
+    private ArrayList teachers = new ArrayList();
     
-    public static void serviceTeacherMenu() {
+    public TeacherController(Scanner keyIn) {
+        this.keyIn = keyIn;
+    }
+
+    public void serviceTeacherMenu() {
         while(true) {
             System.out.print("\nTeacher Management> ");
             String command = keyIn.nextLine();
@@ -27,7 +32,7 @@ public class TeacherController {
         }
     }
     
-    private static void inputTeachers() {
+    private void inputTeachers() {
         while (true) {
             Teacher t = new Teacher();
             System.out.print("Name : ");
@@ -48,7 +53,7 @@ public class TeacherController {
             System.out.print("Subject : ");
             t.setSubject(keyIn.nextLine());
             
-            TeacherList.add(t);
+            teachers.add(t);
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -57,10 +62,10 @@ public class TeacherController {
         }
     }
     
-    private static void printTeachers() {
+    private void printTeachers() {
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\t\tPay \t Subject");
-        for(int i = 0; i < TeacherList.size(); i++) {
-            Teacher t = TeacherList.get(i);
+        for(int i = 0; i < teachers.size(); i++) {
+            Teacher t = (Teacher) teachers.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%d \t[%s]",
                     i,
                     t.getName(),
@@ -74,28 +79,28 @@ public class TeacherController {
         System.out.println();
     }
     
-    private static void deleteTeacher() {
+    private void deleteTeacher() {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= TeacherList.size()) {
+        if (no < 0 || no >= teachers.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        TeacherList.remove(no);
+        teachers.remove(no);
         
         System.out.println("delete No...");
     }
     
-    private static void detailTeacher() {
+    private void detailTeacher() {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= TeacherList.size()) {
+        if (no < 0 || no >= teachers.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        Teacher teacher = TeacherList.get(no);
+        Teacher teacher = (Teacher) teachers.get(no);
         
         System.out.printf("\nName : %s\n", teacher.getName());
         System.out.printf("E-Mail : %s\n", teacher.getEmail());
@@ -105,7 +110,7 @@ public class TeacherController {
         System.out.printf("Subject : %s\n", teacher.getSubject());
     }
     
-    static {
+    {
         Teacher t = new Teacher();
         t.setName("qwer");
         t.setEmail("aqwer@asdf.com");
@@ -113,6 +118,6 @@ public class TeacherController {
         t.setTel("01089028902");
         t.setPay(1000);
         t.setSubject("Java, C, C++");
-        TeacherList.add(t);
+        teachers.add(t);
     }
 }

@@ -1,13 +1,18 @@
 package summary.java.cms.control;
 import java.util.Scanner;
 
-import summary.java.cms.dao.ManagerList;
 import summary.java.cms.domain.Manager;
+import summary.java.cms.util.ArrayList;
 
 public class ManagerController {
-    public static Scanner keyIn;
+    public Scanner keyIn;
+    private ArrayList managers = new ArrayList();
     
-    public static void serviceManagerMenu() {
+    public ManagerController(Scanner keyIn) {
+        this.keyIn = keyIn;
+    }
+    
+    public void serviceManagerMenu() {
         while(true) {
             System.out.print("\nManager Management> ");
             String command = keyIn.nextLine();
@@ -27,7 +32,7 @@ public class ManagerController {
         }
     }
     
-    private static void inputManagers() {
+    private void inputManagers() {
         while (true) {
             Manager m = new Manager();
             System.out.print("Name : ");
@@ -45,7 +50,7 @@ public class ManagerController {
             System.out.print("Position : ");
             m.setPosition(keyIn.nextLine());
             
-            ManagerList.add(m);
+            managers.add(m);
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -54,10 +59,10 @@ public class ManagerController {
         }
     }
     
-    private static void printManagers() {
+    private void printManagers() {
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\t\tPosition");
-        for(int i = 0; i < ManagerList.size(); i++) {
-            Manager m = ManagerList.get(i);
+        for(int i = 0; i < managers.size(); i++) {
+            Manager m = (Manager) managers.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s",
                     i,
                     m.getName(),
@@ -70,28 +75,28 @@ public class ManagerController {
         System.out.println();
     }
     
-    private static void deleteManager() {
+    private void deleteManager() {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= ManagerList.size()) {
+        if (no < 0 || no >= managers.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        ManagerList.remove(no);
+        managers.remove(no);
         
         System.out.println("delete No...");
     }
     
-    private static void detailManager() {
+    private void detailManager() {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= ManagerList.size()) {
+        if (no < 0 || no >= managers.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        Manager manager = ManagerList.get(no);
+        Manager manager = (Manager) managers.get(no);
         
         System.out.printf("\nName : %s\n", manager.getName());
         System.out.printf("E-Mail : %s\n", manager.getEmail());
@@ -100,13 +105,13 @@ public class ManagerController {
         System.out.printf("Position : %s\n", manager.getPosition());
     }
     
-    static {
+    {
         Manager m = new Manager();
         m.setName("a");
         m.setEmail("a@asdf.com");
         m.setPassword("asdf1020");
         m.setTel("01010203404");
         m.setPosition("Ace");
-        ManagerList.add(m);
+        managers.add(m);
     }
 }
