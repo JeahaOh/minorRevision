@@ -1,38 +1,12 @@
 package summary.java.cms.control;
 import java.util.Scanner;
 
-import summary.java.cms.domain.Member;
+import summary.java.cms.dao.TeacherList;
+import summary.java.cms.domain.Teacher;
 
 public class TeacherController {
     public static Scanner keyIn;
-    static Teacher[] teachers = new Teacher[3];
-    static int teacherIndex = 0;
     
-    static class Teacher extends Member {
-        protected String tel;
-        protected int pay;
-        protected String subject;
-        
-        public String getTel() {
-            return tel;
-        }
-        public int getPay() {
-            return pay;
-        }
-        public String getSubject() {
-            return subject;
-        }
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-        public void setPay(int pay) {
-            this.pay = pay;
-        }
-        public void setSubject(String subject) {
-            this.subject = subject;
-        }
-    }
-
     public static void serviceTeacherMenu() {
         while(true) {
             System.out.print("\nTeacher Management> ");
@@ -74,11 +48,7 @@ public class TeacherController {
             System.out.print("Subject : ");
             t.setSubject(keyIn.nextLine());
             
-            if (teacherIndex == teachers.length) {
-                increaseStorage();
-            }
-            
-            teachers[teacherIndex++] = t;
+            TeacherList.add(t);
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -86,25 +56,13 @@ public class TeacherController {
                 break;
         }
     }
-
     
-    
-    private static void increaseStorage() {
-        Teacher[] newList = new Teacher[teachers.length + 3];
-        for (int i = 0; i < teachers.length; i++) {
-            newList[i] = teachers[i];
-        }
-        teachers = newList;
-    }
-
     private static void printTeachers() {
-        int count = 0;
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\t\tPay \t Subject");
-        for(Teacher t : teachers) {
-            if(count++ == teacherIndex)
-                break;
+        for(int i = 0; i < TeacherList.size(); i++) {
+            Teacher t = TeacherList.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%d \t[%s]",
-                    count -1,
+                    i,
                     t.getName(),
                     t.getEmail(),
                     t.getPassword(),
@@ -120,15 +78,11 @@ public class TeacherController {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= teacherIndex) {
+        if (no < 0 || no >= TeacherList.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        
-        for (int i = no; i < teacherIndex - 1; i++) {
-            teachers[i] = teachers[i + 1];
-        }
-        teacherIndex--;
+        TeacherList.remove(no);
         
         System.out.println("delete No...");
     }
@@ -137,17 +91,18 @@ public class TeacherController {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= teacherIndex) {
+        if (no < 0 || no >= TeacherList.size()) {
             System.out.println("Invalid No.");
             return;
         }
+        Teacher teacher = TeacherList.get(no);
         
-        System.out.printf("\nName : %s\n", teachers[no].getName());
-        System.out.printf("E-Mail : %s\n", teachers[no].getEmail());
-        System.out.printf("Password : %s\n", teachers[no].getPassword());
-        System.out.printf("Tel : %s\n", teachers[no].getTel());
-        System.out.printf("Pay : %d\n", teachers[no].getPay());
-        System.out.printf("Subject : %s\n", teachers[no].getSubject());
+        System.out.printf("\nName : %s\n", teacher.getName());
+        System.out.printf("E-Mail : %s\n", teacher.getEmail());
+        System.out.printf("Password : %s\n", teacher.getPassword());
+        System.out.printf("Tel : %s\n", teacher.getTel());
+        System.out.printf("Pay : %d\n", teacher.getPay());
+        System.out.printf("Subject : %s\n", teacher.getSubject());
     }
     
     static {
@@ -158,7 +113,6 @@ public class TeacherController {
         t.setTel("01089028902");
         t.setPay(1000);
         t.setSubject("Java, C, C++");
-        teachers[teacherIndex++] = t;
-        
+        TeacherList.add(t);
     }
 }

@@ -1,47 +1,13 @@
 package summary.java.cms.control;
 import java.util.Scanner;
 
-import summary.java.cms.domain.Member;
+import summary.java.cms.dao.StudentList;
+import summary.java.cms.domain.Student;
 
 
 public class StudentController {
     public static Scanner keyIn;
-    static Student[] students = new Student[5];
-    static int studentIndex = 0;
     
-    static class Student extends Member{
-        protected String tel;
-        protected String school;
-        protected String major;
-        protected Boolean graduate;
-        
-        public String getTel() {
-            return tel;
-        }
-        public String getSchool() {
-            return school;
-        }
-        public String getMajor() {
-            return major;
-        }
-        public Boolean isGraduate() {
-            return graduate;
-        }
-        
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-        public void setSchool(String school) {
-            this.school = school;
-        }
-        public void setMajor(String major) {
-            this.major = major;
-        }
-        public void setGraduate(Boolean graduate) {
-            this.graduate = graduate;
-        }
-    }
-
     public static void serviceStudentMenu() {
         while(true) {
             System.out.print("\nStudent Management> ");
@@ -86,11 +52,7 @@ public class StudentController {
             System.out.print("Graduate : ");
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
             
-            if (studentIndex == students.length) {
-                increaseStorage();
-            }
-            
-            students[studentIndex++] = s;
+            StudentList.add(s);
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -99,23 +61,12 @@ public class StudentController {
         }
     }
 
-    private static void increaseStorage() {
-        Student[] newList = new Student[students.length + 3];
-        for (int i = 0; i < students.length; i++) {
-            newList[i] = students[i];
-        }
-        students = newList;
-        
-    }
-
     private static void printStudents() {
-        int count = 0;
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\tSchool \t Major\tGraduate");
-        for(Student s : students) {
-            if(count++ == studentIndex)
-                break;
+        for(int i = 0; i < StudentList.size(); i++) {
+            Student s = StudentList.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s \t%s \t%b",
-                    count -1,
+                    i,
                     s.getName(),
                     s.getEmail(),
                     s.getPassword(),
@@ -132,15 +83,11 @@ public class StudentController {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= studentIndex) {
+        if (no < 0 || no >= StudentList.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        
-        for (int i = no; i < studentIndex - 1; i++) {
-            students[i] = students[i + 1];
-        }
-        studentIndex--;
+        StudentList.remove(no);
         
         System.out.println("delete No...");
     }
@@ -149,18 +96,19 @@ public class StudentController {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= studentIndex) {
+        if (no < 0 || no >= StudentList.size()) {
             System.out.println("Invalid No.");
             return;
         }
+        Student student = StudentList.get(no);
         
-        System.out.printf("\nName : %s\n", students[no].getName());
-        System.out.printf("E-Mail : %s\n", students[no].getEmail());
-        System.out.printf("Password : %s\n", students[no].getPassword());
-        System.out.printf("Tel : %s\n", students[no].getTel());
-        System.out.printf("School : %s\n", students[no].getSchool());
-        System.out.printf("Major : %s\n", students[no].getMajor());
-        System.out.printf("Graduate : %s\n", students[no].isGraduate());
+        System.out.printf("\nName : %s\n", student.getName());
+        System.out.printf("E-Mail : %s\n", student.getEmail());
+        System.out.printf("Password : %s\n", student.getPassword());
+        System.out.printf("Tel : %s\n", student.getTel());
+        System.out.printf("School : %s\n", student.getSchool());
+        System.out.printf("Major : %s\n", student.getMajor());
+        System.out.printf("Graduate : %s\n", student.isGraduate());
     }
     
     static {
@@ -171,7 +119,7 @@ public class StudentController {
         s.setTel("01010203404");
         s.setSchool("ASDF University");
         s.setMajor("JAVA");
-        students[studentIndex++] = s;
+        StudentList.add(s);
         
         s = new Student();
         s.setName("b");
@@ -181,7 +129,7 @@ public class StudentController {
         s.setSchool("ASDF University");
         s.setMajor("C++");
         s.setGraduate(true);
-        students[studentIndex++] = s;
+        StudentList.add(s);
         
         s = new Student();
         s.setName("c");
@@ -190,7 +138,7 @@ public class StudentController {
         s.setTel("01089021020");
         s.setSchool("ASDF University");
         s.setMajor("JS");
-        students[studentIndex++] = s;
+        StudentList.add(s);
         
         s = new Student();
         s.setName("d");
@@ -200,7 +148,6 @@ public class StudentController {
         s.setSchool("ASDF University");
         s.setMajor("C++");
         s.setGraduate(true);
-        students[studentIndex++] = s;
+        StudentList.add(s);
     }
-
 }

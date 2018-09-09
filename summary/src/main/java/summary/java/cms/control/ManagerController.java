@@ -1,32 +1,11 @@
 package summary.java.cms.control;
 import java.util.Scanner;
 
-
-import summary.java.cms.domain.Member;
+import summary.java.cms.dao.ManagerList;
+import summary.java.cms.domain.Manager;
 
 public class ManagerController {
-    
     public static Scanner keyIn;
-    static Manager[] managers = new Manager[3];
-    static int managerIndex = 0;
-    
-    static class Manager extends Member{
-        protected String tel;
-        protected String position;
-        
-        public String getTel() {
-            return tel;
-        }
-        public String getPosition() {
-            return position;
-        }
-        public void setTel(String tel) {
-            this.tel = tel;
-        }
-        public void setPosition(String position) {
-            this.position = position;
-        }
-    }
     
     public static void serviceManagerMenu() {
         while(true) {
@@ -48,7 +27,6 @@ public class ManagerController {
         }
     }
     
-
     private static void inputManagers() {
         while (true) {
             Manager m = new Manager();
@@ -67,11 +45,7 @@ public class ManagerController {
             System.out.print("Position : ");
             m.setPosition(keyIn.nextLine());
             
-            if (managerIndex == managers.length) {
-                increaseStorage();
-            }
-            
-            managers[managerIndex++] = m;
+            ManagerList.add(m);
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -79,23 +53,13 @@ public class ManagerController {
                 break;
         }
     }
-
-    private static void increaseStorage() {
-        Manager[] newList = new Manager[managers.length + 3];
-        for (int i = 0; i < managers.length; i++) {
-            newList[i] = managers[i];
-        }
-        managers = newList;
-    }
     
     private static void printManagers() {
-        int count = 0;
         System.out.print("No.\tName\tEmail\t\tPassword\tTel\t\tPosition");
-        for(Manager m : managers) {
-            if(count++ == managerIndex)
-                break;
+        for(int i = 0; i < ManagerList.size(); i++) {
+            Manager m = ManagerList.get(i);
             System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s",
-                    count -1,
+                    i,
                     m.getName(),
                     m.getEmail(),
                     m.getPassword(),
@@ -110,15 +74,11 @@ public class ManagerController {
         System.out.print("No. for delete : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= managerIndex) {
+        if (no < 0 || no >= ManagerList.size()) {
             System.out.println("Invalid No.");
             return;
         }
-        
-        for (int i = no; i < managerIndex - 1; i++) {
-            managers[i] = managers[i + 1];
-        }
-        managerIndex--;
+        ManagerList.remove(no);
         
         System.out.println("delete No...");
     }
@@ -127,16 +87,17 @@ public class ManagerController {
         System.out.print("No. for ask : ");
         int no = Integer.parseInt(keyIn.nextLine());
         
-        if (no < 0 || no >= managerIndex) {
+        if (no < 0 || no >= ManagerList.size()) {
             System.out.println("Invalid No.");
             return;
         }
+        Manager manager = ManagerList.get(no);
         
-        System.out.printf("\nName : %s\n", managers[no].getName());
-        System.out.printf("E-Mail : %s\n", managers[no].getEmail());
-        System.out.printf("Password : %s\n", managers[no].getPassword());
-        System.out.printf("Tel : %s\n", managers[no].getTel());
-        System.out.printf("Position : %s\n", managers[no].getPosition());
+        System.out.printf("\nName : %s\n", manager.getName());
+        System.out.printf("E-Mail : %s\n", manager.getEmail());
+        System.out.printf("Password : %s\n", manager.getPassword());
+        System.out.printf("Tel : %s\n", manager.getTel());
+        System.out.printf("Position : %s\n", manager.getPosition());
     }
     
     static {
@@ -146,7 +107,6 @@ public class ManagerController {
         m.setPassword("asdf1020");
         m.setTel("01010203404");
         m.setPosition("Ace");
-        managers[managerIndex++] = m;
-        
+        ManagerList.add(m);
     }
 }

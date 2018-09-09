@@ -6,10 +6,9 @@ import summary.java.cms.control.TeacherController;
 
 public class App {
     /*  
-        각 Member의 배열에 항목을 추가하고 삭제하는 기능을 추가,
-        detail 항목 추가.
-        배열의 크기가 늘어야 할때 늘어나도록 동적으로 만듦.
-        시험하기 편하도록 static block으로 객체 자동생성.
+        Controller class 들의 부피가 커져서,
+        객체 클래스(domain)와 객체 관리 클래스(control), 객체 저장공간 클래스(List)로
+        각각 분리시킴.
     */
     static Scanner keyIn = new Scanner(System.in);
     
