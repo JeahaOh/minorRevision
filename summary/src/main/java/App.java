@@ -5,8 +5,11 @@ import summary.java.cms.control.StudentController;
 import summary.java.cms.control.TeacherController;
 
 public class App {
-    /*  Controller class들과 Member class를 따로 package로 분리.
-        AccessModifier 로 method와 변수의 접근을 제한함.
+    /*  
+        각 Member의 배열에 항목을 추가하고 삭제하는 기능을 추가,
+        detail 항목 추가.
+        배열의 크기가 늘어야 할때 늘어나도록 동적으로 만듦.
+        시험하기 편하도록 static block으로 객체 자동생성.
     */
     static Scanner keyIn = new Scanner(System.in);
     

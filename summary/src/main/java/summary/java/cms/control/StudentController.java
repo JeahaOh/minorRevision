@@ -6,7 +6,7 @@ import summary.java.cms.domain.Member;
 
 public class StudentController {
     public static Scanner keyIn;
-    static Student[] students = new Student[100];
+    static Student[] students = new Student[5];
     static int studentIndex = 0;
     
     static class Student extends Member{
@@ -48,10 +48,12 @@ public class StudentController {
             String command = keyIn.nextLine();
             if(command.equals("list")) {
                 printStudents();
-                //  메소드, 변수, 클래스 이름 한번에 바꾸기. alt + cnd + r
-                //  refactor -> rename
             }   else if(command.equals("add")) {
                 inputStudents();
+            }   else if(command.equals("delete")) {
+                deleteStudent();
+            }   else if(command.equals("detail")) {
+                detailStudent();
             }   else if(command.equals("quit")) {
                 break;
             }   else {
@@ -59,26 +61,6 @@ public class StudentController {
             }
         }
     }
-
-    private static void printStudents() {
-        int count = 0;
-        System.out.print("Name\tEmail\t\tPassword\tTel\tSchool \t Major\tGraduate");
-        for(Student s : students) {
-            if(count++ == studentIndex)
-                break;
-            System.out.printf("\n%s,\t%s,\t%s,\t%s,\t%s,\t%s,\t%b",
-                    s.getName(),
-                    s.getEmail(),
-                    s.getPassword(),
-                    s.getTel(),
-                    s.getSchool(),
-                    s.getMajor(),
-                    s.isGraduate()
-                    );
-        }
-        System.out.println();
-    }
-
     
     private static void inputStudents() {
         while (true) {
@@ -104,6 +86,9 @@ public class StudentController {
             System.out.print("Graduate : ");
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
             
+            if (studentIndex == students.length) {
+                increaseStorage();
+            }
             
             students[studentIndex++] = s;
             
@@ -112,6 +97,110 @@ public class StudentController {
             if (answer.toLowerCase().equals("n"))
                 break;
         }
+    }
+
+    private static void increaseStorage() {
+        Student[] newList = new Student[students.length + 3];
+        for (int i = 0; i < students.length; i++) {
+            newList[i] = students[i];
+        }
+        students = newList;
+        
+    }
+
+    private static void printStudents() {
+        int count = 0;
+        System.out.print("No.\tName\tEmail\t\tPassword\tTel\tSchool \t Major\tGraduate");
+        for(Student s : students) {
+            if(count++ == studentIndex)
+                break;
+            System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s \t%s \t%b",
+                    count -1,
+                    s.getName(),
+                    s.getEmail(),
+                    s.getPassword(),
+                    s.getTel(),
+                    s.getSchool(),
+                    s.getMajor(),
+                    s.isGraduate()
+                    );
+        }
+        System.out.println();
+    }
+    
+    private static void deleteStudent() {
+        System.out.print("No. for delete : ");
+        int no = Integer.parseInt(keyIn.nextLine());
+        
+        if (no < 0 || no >= studentIndex) {
+            System.out.println("Invalid No.");
+            return;
+        }
+        
+        for (int i = no; i < studentIndex - 1; i++) {
+            students[i] = students[i + 1];
+        }
+        studentIndex--;
+        
+        System.out.println("delete No...");
+    }
+    
+    private static void detailStudent() {
+        System.out.print("No. for ask : ");
+        int no = Integer.parseInt(keyIn.nextLine());
+        
+        if (no < 0 || no >= studentIndex) {
+            System.out.println("Invalid No.");
+            return;
+        }
+        
+        System.out.printf("\nName : %s\n", students[no].getName());
+        System.out.printf("E-Mail : %s\n", students[no].getEmail());
+        System.out.printf("Password : %s\n", students[no].getPassword());
+        System.out.printf("Tel : %s\n", students[no].getTel());
+        System.out.printf("School : %s\n", students[no].getSchool());
+        System.out.printf("Major : %s\n", students[no].getMajor());
+        System.out.printf("Graduate : %s\n", students[no].isGraduate());
+    }
+    
+    static {
+        Student s = new Student();
+        s.setName("a");
+        s.setEmail("a@asdf.com");
+        s.setPassword("asdf1020");
+        s.setTel("01010203404");
+        s.setSchool("ASDF University");
+        s.setMajor("JAVA");
+        students[studentIndex++] = s;
+        
+        s = new Student();
+        s.setName("b");
+        s.setEmail("b@asdf.com");
+        s.setPassword("asdf1020");
+        s.setTel("01034041020");
+        s.setSchool("ASDF University");
+        s.setMajor("C++");
+        s.setGraduate(true);
+        students[studentIndex++] = s;
+        
+        s = new Student();
+        s.setName("c");
+        s.setEmail("c@asdf.com");
+        s.setPassword("asdf8902");
+        s.setTel("01089021020");
+        s.setSchool("ASDF University");
+        s.setMajor("JS");
+        students[studentIndex++] = s;
+        
+        s = new Student();
+        s.setName("d");
+        s.setEmail("d@asdf.com");
+        s.setPassword("asdf8902");
+        s.setTel("01034048902");
+        s.setSchool("ASDF University");
+        s.setMajor("C++");
+        s.setGraduate(true);
+        students[studentIndex++] = s;
     }
 
 }
