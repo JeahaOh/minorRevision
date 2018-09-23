@@ -5,7 +5,9 @@ import java.util.Scanner;
 import summary.java.cms.context.ApplicationContext;
 import summary.java.cms.context.RequestMappingHandlerMapping;
 import summary.java.cms.context.RequestMappingHandlerMapping.RequestMappingHandler;
+import summary.java.cms.domain.Manager;
 import summary.java.cms.domain.Student;
+import summary.java.cms.domain.Teacher;
 
 public class App {
 /*   
@@ -22,6 +24,8 @@ public class App {
 */
     
     public static LinkedList<Student> students = new LinkedList<>();
+    public static LinkedList<Teacher> teachers = new LinkedList<>();
+    public static LinkedList<Manager> managers = new LinkedList<>();
     static Scanner keyIn = new Scanner(System.in);
     
     public static void main(String[] args) throws Exception{
@@ -37,7 +41,7 @@ public class App {
             //  이름으로 객체를 꺼내기.
             Object obj = iocContainer.getBean(name);
             
-            //  객체에서 @RequestMapping이 붙은 베소드를 찾아 저장.
+            //  객체에서 @RequestMapping이 붙은 메소드를 찾아 저장.
             requestHandlerMap.addMapping(obj);
         }
         
