@@ -1,23 +1,27 @@
+package summary.java.cms;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import summary.java.cms.context.ApplicationContext;
 import summary.java.cms.context.RequestMappingHandlerMapping;
 import summary.java.cms.context.RequestMappingHandlerMapping.RequestMappingHandler;
+import summary.java.cms.domain.Student;
 
 public class App {
-    /*
-        Annotation활용.
-        RequestMapping을 통해 메소드 호출.
-
-        ApplicationContext에서 객체를 저장.
-        Component와 RequestMapping 두개의 어노테이션을 통해서 객체를 생성,
-        RequestMappingHandlerMapping 객체의 명령어를 저장함.
-        @RequestMapping 얘를 key값으로 메소드를 불러옴ㅇㅇ 시발 어렵네.
-        
-        남이 짠 코드에 쫄지 말라.
-        객체지향 잘 하는방법, 짜여진 코드가 무슨일을 하는지 이해를 먼저 하라.
-    */
+/*   
+    Design Patterns
+    ->  현업에서 사용되고, 좋다고 이미 검증된 설계 방법 "BestPractices"를 모아둔것.
+        건축에 관한 설계패턴을 소프트웨어에 접목한것.
+        GoF 의 디자인 패턴 C++을 기반으로 썼고 Java예제도 있음.
     
+    그중 하나.
+    Command Pattern
+        클래스에 메서드가 추가될 가능성이 있을 경우,
+        ->  메서드 추가 하더라도 기존 클래스에 영향을 최소화 시키는 설계 기법.
+        "메서드의 객체화" -> 메소드를 클래스로 정의
+*/
+    
+    public static LinkedList<Student> students = new LinkedList<>();
     static Scanner keyIn = new Scanner(System.in);
     
     public static void main(String[] args) throws Exception{
@@ -56,8 +60,7 @@ public class App {
     }
     
     private static String prompt() {
-        System.out.println("\n[MENU]");
-        System.out.print("MENU > ");
+        System.out.print("\n[MENU] > ");
         return keyIn.nextLine();
     }
 }
