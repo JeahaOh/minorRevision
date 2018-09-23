@@ -3,11 +3,13 @@ package summary.java.cms.control;
 import java.util.Scanner;
 
 import summary.java.cms.annotation.Component;
+import summary.java.cms.annotation.RequestMapping;
 
-@Component("4")
-public class Hell implements Controller{
-    @Override
-    public void service(Scanner keyIn) {
+@Component("hell")
+public class Hell {
+    
+    @RequestMapping
+    public void hell(Scanner keyIn) {
         System.out.println("Hell..");
     }
 }

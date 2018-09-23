@@ -4,17 +4,19 @@ import java.util.List;
 import java.util.Scanner;
 
 import summary.java.cms.annotation.Component;
+import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Student;
 
-@Component("1")
-public class StudentController implements Controller {
+@Component("student")
+public class StudentController {
     private List<Student> students = new LinkedList<>();
     
     public StudentController() {
         init();
     }
 
-    public void service(Scanner keyIn) {
+    @RequestMapping
+    public void student(Scanner keyIn) {
         while(true) {
             System.out.print("\nStudent Management> ");
             String command = keyIn.nextLine();

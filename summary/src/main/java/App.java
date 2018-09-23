@@ -1,12 +1,17 @@
+import java.lang.reflect.Method;
 import java.util.Scanner;
 
+import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.context.ApplicationContext;
-import summary.java.cms.control.Controller;
 
 public class App {
     /*
-        ApplicationContext를 만들어서 클래스를 따로 빼는건 목잡하지만 유지 보수가 더 쉬워짐.
-        이것이 SpringFrameWork의 일부를 따라한것임.
+        Annotation활용.
+        RequestMapping을 통해 메소드 호출.
+
+        Component와 RequestMapping 두개의 어노테이션을 통해서 객체를 생성,
+        Component 어노테이션의 student, teacher, manager으로 클래스를 호출해서
+        RequestMapping으로 메소드들을 실행시킴.
     */
     
     static Scanner keyIn = new Scanner(System.in);
@@ -16,28 +21,49 @@ public class App {
         = new ApplicationContext("summary.java.cms.control");
         
         while(true) {
-            String menu = promptMenu();
-            if(menu.equals("0")) {
+            String menu = prompt();
+            if(menu.equals("exit")) {
                 System.out.println("Bye!");
                 break;
             }
-            Controller controller = (Controller)iocContainer.getBean(menu);
-            if(controller != null) {
-                controller.service(keyIn);
-            }   else {
-                System.out.println("Invalid Menu.");
+            Object controller = iocContainer.getBean(menu);
+            if(controller == null) {
+                System.out.println("Invalid MENU..");
+                continue;
+            }   
+            Method method = findByRequestMapping(controller.getClass());
+            if(method == null) {
+                System.out.println("Invalid MENU..");
+                continue;
             }
+            
+            method.invoke(controller, keyIn);
+            
         }
         keyIn.close();
     }
     
-    private static String promptMenu() {
+    private static Method findByRequestMapping(Class<?> clazz) {
+
+        // => 인자로 받은 클래스의 메소드 목록을 꺼낸다.
+        Method[] methods = clazz.getDeclaredMethods();
+        for(Method m : methods) {
+            
+            // => 메소드에서 @ReauestMapping 정보를 추출한다.
+            RequestMapping anno = m.getAnnotation(RequestMapping.class);
+            
+            if(anno != null) {
+                //  찾았다면 메소드를 리턴.
+                return m;
+            }
+            
+        }
+        return null;
+    }
+
+    private static String prompt() {
         System.out.println("[MENU]");
-        System.out.println("1. Student Info Management");
-        System.out.println("2. Teacher Info Management");
-        System.out.println("3. Manager Info Management");
-        System.out.println("0. EXIT");
-        System.out.print("MENU No.> ");
+        System.out.print("MENU > ");
         return keyIn.nextLine();
     }
 }
