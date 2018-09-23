@@ -3,6 +3,7 @@ package summary.java.cms.context;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.apache.ibatis.io.Resources;
 
@@ -57,8 +58,15 @@ public class ApplicationContext {
                    자바에서 보든 파일은 .class임
                    (interface, abstract class 뭐든 다 class로 짜여임.)
 */                   
-                   // =>  어노테이션 value값으로 인스턴스를 objPool에 저장.
-                   objPool.put(anno.value(), instance);
+                   // =>  Component 어노테이션의 value값이 있으면 그 값으로 objPool에 저장,
+                   //   없으면 클래스 이름으로 객체를 저장.
+                   
+                   if(anno.value().length() > 0) {
+                       //   => Component 어노테이션 value값으로 인스턴스를 objPool에 저장.
+                       objPool.put(anno.value(), instance);
+                   }    else {
+                       objPool.put(clazz.getName(), instance);
+                   }
                    
                }   catch (Exception e) {
                    e.printStackTrace();
@@ -69,5 +77,12 @@ public class ApplicationContext {
    public Object getBean(String name) {
        //  objPool에서 주어진 이름의 객체를 찾아 리턴시킴.
        return objPool.get(name);
+   }
+   
+   public String[] getBeanDefinitionNames() {
+       Set<String> keySet = objPool.keySet();
+       String[] names = new String[keySet.size()];
+       keySet.toArray(names);
+       return names;
    }
 }

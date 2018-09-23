@@ -5,10 +5,10 @@ import java.util.Scanner;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 
-@Component("hell")
+@Component
 public class Hell {
     
-    @RequestMapping
+    @RequestMapping("hell")
     public void hell(Scanner keyIn) {
         System.out.println("Hell..");
     }

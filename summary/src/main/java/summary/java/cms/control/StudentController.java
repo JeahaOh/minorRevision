@@ -7,7 +7,7 @@ import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Student;
 
-@Component("student")
+@Component
 public class StudentController {
     private List<Student> students = new LinkedList<>();
     
@@ -15,7 +15,7 @@ public class StudentController {
         init();
     }
 
-    @RequestMapping
+    @RequestMapping("student")
     public void student(Scanner keyIn) {
         while(true) {
             System.out.print("\nStudent Management> ");

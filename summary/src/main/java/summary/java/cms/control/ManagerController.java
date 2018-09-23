@@ -7,7 +7,7 @@ import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Manager;
 
-@Component("manager")
+@Component
 public class ManagerController {
     private List<Manager> managers = new ArrayList<>();
     
@@ -15,7 +15,7 @@ public class ManagerController {
         init();
     }
 
-    @RequestMapping
+    @RequestMapping("manager")
     public void manager(Scanner keyIn) {
         while(true) {
             System.out.print("\nManager Management> ");
