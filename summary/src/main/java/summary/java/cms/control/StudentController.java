@@ -3,11 +3,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Student;
 
-
+@Component("1")
 public class StudentController implements Controller {
-    public String name = "1";
     private List<Student> students = new LinkedList<>();
     
     public StudentController() {

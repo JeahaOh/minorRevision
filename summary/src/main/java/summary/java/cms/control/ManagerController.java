@@ -3,10 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Manager;
 
+@Component("3")
 public class ManagerController implements Controller{
-    public String name = "3";
     private List<Manager> managers = new ArrayList<>();
     
     public ManagerController() {

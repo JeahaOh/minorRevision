@@ -2,8 +2,10 @@ package summary.java.cms.control;
 
 import java.util.Scanner;
 
+import summary.java.cms.annotation.Component;
+
+@Component("hidden")
 public class Hidden implements Controller{
-    public String name = "hidden";
     
     @Override
     public void service(Scanner keyIn) {

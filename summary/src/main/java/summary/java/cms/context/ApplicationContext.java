@@ -2,10 +2,11 @@ package summary.java.cms.context;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import org.apache.ibatis.io.Resources;
+
+import summary.java.cms.annotation.Component;
 
 public class ApplicationContext {
     HashMap<String, Object> objPool = new HashMap<>();
@@ -47,14 +48,17 @@ public class ApplicationContext {
                    //  => 얻어온 생성자로 인스턴스 생성.
                    Object instance = constructor.newInstance();
                    
-                   // => 필드요소, 멤버변수 name의 값을 찾음.
-                   Field field = clazz.getField("name");
-                   
-                   Object name = field.get(instance);
-                   System.out.println(clazz.getName() + "==>" + name);
-                   
-                   // =>  필드"name"의 값으로(멤버변수 name의 값으로) 인스턴스를 objPool에 저장함.
-                   objPool.put((String)name, instance);
+                   // => 클래스에서 component annotaion을 추출.
+                   Component anno = clazz.getAnnotation(Component.class);
+/*                   
+                   !! 자바 컴파일러가 자동으로 .class 라는 변수를 생성함.
+                   클래스 정보를 담고 있는 변수임.
+                   String을 다루는 클래스 String, Integer를 다루는 클래스 Integer, etc
+                   자바에서 보든 파일은 .class임
+                   (interface, abstract class 뭐든 다 class로 짜여임.)
+*/                   
+                   // =>  어노테이션 value값으로 인스턴스를 objPool에 저장.
+                   objPool.put(anno.value(), instance);
                    
                }   catch (Exception e) {
                    e.printStackTrace();
