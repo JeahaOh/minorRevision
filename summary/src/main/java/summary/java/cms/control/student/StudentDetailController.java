@@ -12,14 +12,14 @@ public class StudentDetailController {
     
     @RequestMapping("student/detail")
     public void detail(Scanner keyIn) {
-        System.out.print("No. for ask : ");
-        int no = Integer.parseInt(keyIn.nextLine());
+        System.out.print("email for ask : ");
+        String email = keyIn.nextLine();
+        Student student = App.studentDao.findByEmail(email);
         
-        if (no < 0 || no >= App.students.size()) {
-            System.out.println("Invalid No.");
+        if (student == null) {
+            System.out.println("Invalid Email");
             return;
         }
-        Student student = App.students.get(no);
         
         System.out.printf("\nName : %s\n", student.getName());
         System.out.printf("E-Mail : %s\n", student.getEmail());

@@ -2,11 +2,11 @@ package summary.java.cms;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import summary.java.cms.Dao.StudentDao;
 import summary.java.cms.context.ApplicationContext;
 import summary.java.cms.context.RequestMappingHandlerMapping;
 import summary.java.cms.context.RequestMappingHandlerMapping.RequestMappingHandler;
 import summary.java.cms.domain.Manager;
-import summary.java.cms.domain.Student;
 import summary.java.cms.domain.Teacher;
 
 public class App {
@@ -23,7 +23,7 @@ public class App {
         "메서드의 객체화" -> 메소드를 클래스로 정의
 */
     
-    public static LinkedList<Student> students = new LinkedList<>();
+    public static StudentDao studentDao = new StudentDao();
     public static LinkedList<Teacher> teachers = new LinkedList<>();
     public static LinkedList<Manager> managers = new LinkedList<>();
     static Scanner keyIn = new Scanner(System.in);

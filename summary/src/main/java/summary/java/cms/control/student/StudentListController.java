@@ -1,5 +1,6 @@
 package summary.java.cms.control.student;
 
+import java.util.List;
 import java.util.Scanner;
 
 import summary.java.cms.App;
@@ -12,11 +13,11 @@ public class StudentListController {
     
     @RequestMapping("student/list")
     public void list(Scanner keyIn) {
-        System.out.print("No.\tName\tEmail\t\tTel");
-        for(int i = 0; i < App.students.size(); i++) {
-            Student s = App.students.get(i);
-            System.out.printf("\n %s : \t%s \t%s \t%s",
-                    i,
+        List<Student> list = App.studentDao.findAll();
+        
+        System.out.print("Name\tEmail\t\tTel");
+        for(Student s : list) {
+            System.out.printf("\n%s \t%s \t%s",
                     s.getName(),
                     s.getEmail(),
                     s.getTel()

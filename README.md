@@ -1,6 +1,10 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## tag: v1.7
+
+- DAO 도입하기
+
 ## tag: v1.6
 
 - Command 디자인 패턴 적용

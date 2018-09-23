@@ -36,7 +36,11 @@ public class StudentAddController {
             System.out.print("Graduate : ");
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
             
-            App.students.add(s);
+            if (App.studentDao.insert(s) > 0) {
+                System.out.println("저장하였습니다.");
+            } else {
+                System.out.println("같은 이메일의 학생이 존재합니다.");
+            }
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -53,7 +57,7 @@ public class StudentAddController {
         s.setTel("01010203404");
         s.setSchool("ASDF University");
         s.setMajor("JAVA");
-        App.students.add(s);
+        App.studentDao.insert(s);
         
         s = new Student();
         s.setName("b");
@@ -63,7 +67,7 @@ public class StudentAddController {
         s.setSchool("ASDF University");
         s.setMajor("C++");
         s.setGraduate(true);
-        App.students.add(s);
+        App.studentDao.insert(s);
         
         s = new Student();
         s.setName("c");
@@ -72,7 +76,7 @@ public class StudentAddController {
         s.setTel("01089021020");
         s.setSchool("ASDF University");
         s.setMajor("JS");
-        App.students.add(s);
+        App.studentDao.insert(s);
         
         s = new Student();
         s.setName("d");
@@ -82,6 +86,6 @@ public class StudentAddController {
         s.setSchool("ASDF University");
         s.setMajor("C++");
         s.setGraduate(true);
-        App.students.add(s);
+        App.studentDao.insert(s);
     }
 }
