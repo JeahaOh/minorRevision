@@ -13,6 +13,7 @@ public class ManagerAddController {
     public void add(Scanner keyIn) {
         while (true) {
             Manager m = new Manager();
+            
             System.out.print("Name : ");
             m.setName(keyIn.nextLine());
             
@@ -28,7 +29,11 @@ public class ManagerAddController {
             System.out.print("Position : ");
             m.setPosition(keyIn.nextLine());
             
-            App.managers.add(m);
+            if (App.managerDao.insert(m) > 0) {
+                System.out.println("Saved.");
+            } else {
+                System.out.println("The Email is already Exist.");
+            }
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -44,6 +49,6 @@ public class ManagerAddController {
         m.setPassword("asdf1020");
         m.setTel("01010203404");
         m.setPosition("Ace");
-        App.managers.add(m);
+        App.managerDao.insert(m);
     }
 }

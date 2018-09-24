@@ -1,4 +1,5 @@
 package summary.java.cms.control.manager;
+import java.util.List;
 import java.util.Scanner;
 
 import summary.java.cms.App;
@@ -11,16 +12,14 @@ public class ManagerListController {
     
     @RequestMapping("manager/list")
     public void list(Scanner keyIn) {
-        System.out.print("No.\tName\tEmail\t\tPassword\tTel\t\tPosition");
-        for(int i = 0; i < App.managers.size(); i++) {
-            Manager m = (Manager) App.managers.get(i);
-            System.out.printf("\n %s : \t%s \t%s \t%s \t%s \t%s",
-                    i,
+        List<Manager> list = App.managerDao.findAll();
+        
+        System.out.print("Name\tEmail\t\tTel");
+        for(Manager m : list) {
+            System.out.printf("\n%s \t%s \t%s",
                     m.getName(),
                     m.getEmail(),
-                    m.getPassword(),
-                    m.getTel(),
-                    m.getPosition()
+                    m.getTel()
                     );
         }
         System.out.println();

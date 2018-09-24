@@ -1,13 +1,12 @@
 package summary.java.cms;
-import java.util.LinkedList;
 import java.util.Scanner;
 
+import summary.java.cms.Dao.ManagerDao;
 import summary.java.cms.Dao.StudentDao;
+import summary.java.cms.Dao.TeacherDao;
 import summary.java.cms.context.ApplicationContext;
 import summary.java.cms.context.RequestMappingHandlerMapping;
 import summary.java.cms.context.RequestMappingHandlerMapping.RequestMappingHandler;
-import summary.java.cms.domain.Manager;
-import summary.java.cms.domain.Teacher;
 
 public class App {
 /*   
@@ -24,8 +23,8 @@ public class App {
 */
     
     public static StudentDao studentDao = new StudentDao();
-    public static LinkedList<Teacher> teachers = new LinkedList<>();
-    public static LinkedList<Manager> managers = new LinkedList<>();
+    public static TeacherDao teacherDao = new TeacherDao();
+    public static ManagerDao managerDao = new ManagerDao();
     static Scanner keyIn = new Scanner(System.in);
     
     public static void main(String[] args) throws Exception{

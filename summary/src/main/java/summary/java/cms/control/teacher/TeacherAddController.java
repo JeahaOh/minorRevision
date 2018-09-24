@@ -30,14 +30,18 @@ public class TeacherAddController {
             try {
                 t.setPay(Integer.parseInt(keyIn.nextLine()));
             }   catch(Exception e) {
-                System.out.println("\n!!급여항목 입력 오류!!\n");
+                System.out.println("\n!!Input Error!!\n");
                 break;
             }
             
             System.out.print("Subject : ");
             t.setSubject(keyIn.nextLine());
             
-            App.teachers.add(t);
+            if (App.teacherDao.insert(t) > 0) {
+                System.out.println("Saved.");
+            } else {
+                System.out.println("The Email is already Exist.");
+            }
             
             System.out.print("\nContinue? [Y/n] ");
             String answer = keyIn.nextLine();
@@ -54,6 +58,6 @@ public class TeacherAddController {
         t.setTel("01089028902");
         t.setPay(1000);
         t.setSubject("Java, C, C++");
-        App.teachers.add(t);
+        App.teacherDao.insert(t);
     }
 }

@@ -11,14 +11,14 @@ public class ManagerDetailController {
     
     @RequestMapping("manager/detail")
     public void detail(Scanner keyIn) {
-        System.out.print("No. for ask : ");
-        int no = Integer.parseInt(keyIn.nextLine());
+        System.out.print("email for ask : ");
+        String email = keyIn.nextLine();
+        Manager manager = App.managerDao.findByEmail(email);
         
-        if (no < 0 || no >= App.managers.size()) {
-            System.out.println("Invalid No.");
+        if (manager == null) {
+            System.out.println("Invalid Email");
             return;
         }
-        Manager manager = (Manager) App.managers.get(no);
         
         System.out.printf("\nName : %s\n", manager.getName());
         System.out.printf("E-Mail : %s\n", manager.getEmail());

@@ -37,9 +37,9 @@ public class StudentAddController {
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
             
             if (App.studentDao.insert(s) > 0) {
-                System.out.println("저장하였습니다.");
+                System.out.println("Saved.");
             } else {
-                System.out.println("같은 이메일의 학생이 존재합니다.");
+                System.out.println("The Email is already Exist.");
             }
             
             System.out.print("\nContinue? [Y/n] ");
