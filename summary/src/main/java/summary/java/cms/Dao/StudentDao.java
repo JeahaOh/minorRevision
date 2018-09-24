@@ -3,6 +3,7 @@ package summary.java.cms.Dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Student;
 /*  DAO 분리.
     Data저장시  ArrayList, LinkedList, File, DB 어디에 저장 하던지
@@ -12,6 +13,7 @@ import summary.java.cms.domain.Student;
     데이터 저장 방법을 바꿔도 controller에 영향을 미치지 못함.
 */
 
+@Component
 public class StudentDao {
     private List<Student> list = new ArrayList<>();
     

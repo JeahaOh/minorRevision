@@ -1,19 +1,27 @@
 package summary.java.cms.control.manager;
 import java.util.Scanner;
 
-import summary.java.cms.App;
+import summary.java.cms.Dao.ManagerDao;
+import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Manager;
 
 @Component
 public class ManagerDetailController {
+
+    ManagerDao managerDao;
+    
+    @Autowired
+    public void setManagerDao(ManagerDao managerDao) {
+        this.managerDao = managerDao;
+    }
     
     @RequestMapping("manager/detail")
     public void detail(Scanner keyIn) {
         System.out.print("email for ask : ");
         String email = keyIn.nextLine();
-        Manager manager = App.managerDao.findByEmail(email);
+        Manager manager = managerDao.findByEmail(email);
         
         if (manager == null) {
             System.out.println("Invalid Email");

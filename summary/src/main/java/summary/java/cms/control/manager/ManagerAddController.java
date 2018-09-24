@@ -1,13 +1,21 @@
 package summary.java.cms.control.manager;
 import java.util.Scanner;
 
-import summary.java.cms.App;
+import summary.java.cms.Dao.ManagerDao;
+import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Manager;
 
 @Component
 public class ManagerAddController {
+    
+    ManagerDao managerDao;
+    
+    @Autowired
+    public void setManagerDao(ManagerDao managerDao) {
+        this.managerDao = managerDao;
+    }
     
     @RequestMapping("manager/add")
     public void add(Scanner keyIn) {
@@ -29,7 +37,7 @@ public class ManagerAddController {
             System.out.print("Position : ");
             m.setPosition(keyIn.nextLine());
             
-            if (App.managerDao.insert(m) > 0) {
+            if (managerDao.insert(m) > 0) {
                 System.out.println("Saved.");
             } else {
                 System.out.println("The Email is already Exist.");
@@ -40,15 +48,5 @@ public class ManagerAddController {
             if (answer.toLowerCase().equals("n"))
                 break;
         }
-    }
-    
-    {
-        Manager m = new Manager();
-        m.setName("a");
-        m.setEmail("a@asdf.com");
-        m.setPassword("asdf1020");
-        m.setTel("01010203404");
-        m.setPosition("Ace");
-        App.managerDao.insert(m);
     }
 }

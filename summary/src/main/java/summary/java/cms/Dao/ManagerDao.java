@@ -3,8 +3,10 @@ package summary.java.cms.Dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Manager;
 
+@Component
 public class ManagerDao {
     private List<Manager> list = new ArrayList<>();
 

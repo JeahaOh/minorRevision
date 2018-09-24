@@ -2,13 +2,21 @@ package summary.java.cms.control.teacher;
 
 import java.util.Scanner;
 
-import summary.java.cms.App;
+import summary.java.cms.Dao.TeacherDao;
+import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Teacher;
 
 @Component
 public class TeacherAddController {
+    
+    TeacherDao teacherDao;
+    
+    @Autowired
+    public void setTeacherDao(TeacherDao teacherDao) {
+        this.teacherDao = teacherDao;
+    }
     
     @RequestMapping("teacher/add")
     public void add(Scanner keyIn) {
@@ -37,7 +45,7 @@ public class TeacherAddController {
             System.out.print("Subject : ");
             t.setSubject(keyIn.nextLine());
             
-            if (App.teacherDao.insert(t) > 0) {
+            if (teacherDao.insert(t) > 0) {
                 System.out.println("Saved.");
             } else {
                 System.out.println("The Email is already Exist.");
@@ -48,16 +56,5 @@ public class TeacherAddController {
             if (answer.toLowerCase().equals("n"))
                 break;
         }
-    }
-    
-    {
-        Teacher t = new Teacher();
-        t.setName("qwer");
-        t.setEmail("aqwer@asdf.com");
-        t.setPassword("asdfqwer");
-        t.setTel("01089028902");
-        t.setPay(1000);
-        t.setSubject("Java, C, C++");
-        App.teacherDao.insert(t);
     }
 }

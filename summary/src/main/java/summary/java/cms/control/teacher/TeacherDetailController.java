@@ -2,7 +2,8 @@ package summary.java.cms.control.teacher;
 
 import java.util.Scanner;
 
-import summary.java.cms.App;
+import summary.java.cms.Dao.TeacherDao;
+import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Teacher;
@@ -10,11 +11,18 @@ import summary.java.cms.domain.Teacher;
 @Component
 public class TeacherDetailController {
     
+    TeacherDao teacherDao;
+    
+    @Autowired
+    public void setTeacherDao(TeacherDao teacherDao) {
+        this.teacherDao = teacherDao;
+    }
+    
     @RequestMapping("teacher/detail")
     public void detail(Scanner keyIn) {
         System.out.print("email for ask : ");
         String email = keyIn.nextLine();
-        Teacher teacher = App.teacherDao.findByEmail(email);
+        Teacher teacher = teacherDao.findByEmail(email);
         
         if (teacher == null) {
             System.out.println("Invalid Email");

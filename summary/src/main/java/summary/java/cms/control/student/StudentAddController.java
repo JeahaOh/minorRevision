@@ -2,13 +2,21 @@ package summary.java.cms.control.student;
 
 import java.util.Scanner;
 
-import summary.java.cms.App;
+import summary.java.cms.Dao.StudentDao;
+import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
 import summary.java.cms.domain.Student;
 
 @Component
 public class StudentAddController {
+    
+    StudentDao studentDao;
+    
+    @Autowired
+    public void setStudentDao(StudentDao studentDao) {
+        this.studentDao = studentDao;
+    }
     
     @RequestMapping("student/add")
     public void add(Scanner keyIn) {
@@ -36,7 +44,7 @@ public class StudentAddController {
             System.out.print("Graduate : ");
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
             
-            if (App.studentDao.insert(s) > 0) {
+            if (studentDao.insert(s) > 0) {
                 System.out.println("Saved.");
             } else {
                 System.out.println("The Email is already Exist.");
@@ -47,45 +55,5 @@ public class StudentAddController {
             if (answer.toLowerCase().equals("n"))
                 break;
         }
-    }
-    
-    {   //  구조에 따라, 어디에 붙이느냐에 따라 static 이였다가 Instance였다 함.
-        Student s = new Student();
-        s.setName("a");
-        s.setEmail("a@asdf.com");
-        s.setPassword("asdf1020");
-        s.setTel("01010203404");
-        s.setSchool("ASDF University");
-        s.setMajor("JAVA");
-        App.studentDao.insert(s);
-        
-        s = new Student();
-        s.setName("b");
-        s.setEmail("b@asdf.com");
-        s.setPassword("asdf1020");
-        s.setTel("01034041020");
-        s.setSchool("ASDF University");
-        s.setMajor("C++");
-        s.setGraduate(true);
-        App.studentDao.insert(s);
-        
-        s = new Student();
-        s.setName("c");
-        s.setEmail("c@asdf.com");
-        s.setPassword("asdf8902");
-        s.setTel("01089021020");
-        s.setSchool("ASDF University");
-        s.setMajor("JS");
-        App.studentDao.insert(s);
-        
-        s = new Student();
-        s.setName("d");
-        s.setEmail("d@asdf.com");
-        s.setPassword("asdf8902");
-        s.setTel("01034048902");
-        s.setSchool("ASDF University");
-        s.setMajor("C++");
-        s.setGraduate(true);
-        App.studentDao.insert(s);
     }
 }
