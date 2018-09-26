@@ -1,20 +1,20 @@
 package summary.java.cms.Dao.imple;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.Dao.DuplicationDaoException;
+import summary.java.cms.Dao.MandatoryValueDaoException;
 import summary.java.cms.Dao.StudentDao;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Student;
-/*  DAO 분리.
-    Data를 File에 저장하기 위한 DAO
- */
 
 @Component
 public class StudentFile2Dao implements StudentDao {
@@ -51,31 +51,28 @@ public class StudentFile2Dao implements StudentDao {
     }
 
     private void save() {
+        File dataFile = new File(fileName);
         try(
-                BufferedWriter out = 
-                new BufferedWriter(new FileWriter("data/student.dat"))
+                ObjectOutputStream out = new ObjectOutputStream(
+                        new BufferedOutputStream(
+                                new FileOutputStream(dataFile)));
                 ){
-            for(Student s : list) {
-                out.write(
-                        String.format("%s,%s,%s,%s,%s,%b",
-                                s.getEmail(),
-                                s.getName(),
-                                s.getPassword(),
-                                s.getSchool(),
-                                s.getTel(),
-                                s.isGraduate()
-                                ));
-            }
-            out.flush();    //  버퍼에서 출력시키기.
+            out.writeObject(list);
         }   catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public int insert(Student student) {
+    public int insert(Student student)
+            throws MandatoryValueDaoException, DuplicationDaoException {
+        if(student.getName().length() == 0 ||
+                student.getEmail().length() == 0 ||
+                student.getPassword().length() == 0) {
+            throw new MandatoryValueDaoException("Missing Required Value Error");
+        }
         for (Student item : list) {
             if (item.getEmail().equals(student.getEmail())) {
-                return 0;
+                throw new DuplicationDaoException("The Email is already Exist.");
             }
         }
         list.add(student);

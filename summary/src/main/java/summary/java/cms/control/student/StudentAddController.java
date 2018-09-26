@@ -2,6 +2,8 @@ package summary.java.cms.control.student;
 
 import java.util.Scanner;
 
+import summary.java.cms.Dao.DuplicationDaoException;
+import summary.java.cms.Dao.MandatoryValueDaoException;
 import summary.java.cms.Dao.StudentDao;
 import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
@@ -43,11 +45,15 @@ public class StudentAddController {
             
             System.out.print("Graduate : ");
             s.setGraduate(Boolean.parseBoolean(keyIn.nextLine()));
-            
-            if (studentDao.insert(s) > 0) {
-                System.out.println("Saved.");
-            } else {
-                System.out.println("The Email is already Exist.");
+           
+            try {
+                studentDao.insert(s);
+                System.out.println(s.getEmail() + " Has Saved..");
+            }   catch(MandatoryValueDaoException e) {
+                System.out.println("Add : Missing Required Value Error");
+            }   catch(DuplicationDaoException e) {
+                System.out.println("Add : The Email is already Exist.");
+                System.out.println(e.getMessage());
             }
             
             System.out.print("\nContinue? [Y/n] ");

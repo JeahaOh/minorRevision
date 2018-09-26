@@ -10,16 +10,16 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.Dao.DuplicationDaoException;
 import summary.java.cms.Dao.ManagerDao;
+import summary.java.cms.Dao.MandatoryValueDaoException;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Manager;
 
 @Component
 public class ManagerFile2Dao implements ManagerDao {
     static String defaultFileName = "data/manager2.dat";
-    //  모든클래스가 동일한값.
     String fileName;
-    //  인스턴스 변수.
     private List<Manager> list = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
@@ -28,10 +28,9 @@ public class ManagerFile2Dao implements ManagerDao {
         File dataFile = new File(fileName);
 
         try (
-                FileInputStream in0 = new FileInputStream(dataFile);
-                BufferedInputStream in1 = new BufferedInputStream(in0);
-                ObjectInputStream in = new ObjectInputStream(in1);
-                //                ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataFile)));
+                ObjectInputStream in = new ObjectInputStream(
+                        new BufferedInputStream(
+                                new FileInputStream(dataFile)));
                 ){
             list = (List<Manager>) in.readObject();
             while(true) {
@@ -46,10 +45,12 @@ public class ManagerFile2Dao implements ManagerDao {
             e.printStackTrace();
         }
     }
+    
     public ManagerFile2Dao() {
         //  Constructor 바로 아랫 줄은 주석 외에 다른 문장이 오면 안된다는것.
         this(defaultFileName);
     }
+    
     private void save() {
         File dataFile = new File(fileName);
         try (
@@ -58,34 +59,38 @@ public class ManagerFile2Dao implements ManagerDao {
                                 new FileOutputStream(dataFile)));
                 ){
             out.writeObject(list);
-            //            for (Manager m : list) {
-            //                out.writeObject(m);
-            //            }
         }   catch(Exception e) {
             e.printStackTrace();
         }
     }
-    public int insert(Manager manager) {
+    
+    public int insert(Manager manager)
+            throws MandatoryValueDaoException, DuplicationDaoException {
         //  필수 입력 항목이 비었을 때,
         if(manager.getName().length() == 0 ||
            manager.getEmail().length() == 0 ||
            manager.getPassword().length() == 0) {
-            //  => 예외 처리 문법이 없던 시절에는 리턴값으로 예외 상황을 호출자에게 알렸음.
-            return -1;
+           //   호출자에게 예외 정보를 만들어 던진다.
+            throw new MandatoryValueDaoException("Missing Required Value Error");
         }
         for(Manager item : list) {
             if(item.getEmail().equals(manager.getEmail())) {
-                //  같은 이메일이 존재할 경우
-                return -2;
+                //  호출자에게 예외 정보를 만들어 던진다.
+                throw new DuplicationDaoException("The Email is already Exist.");
+                //  에러 메세지 출력은 두가지 방법이 있음.
+                //  에러를 던지면서 에러 메세지를 던지거나 에러를 받는곳에서 에러메세지 출력 가능.
+                //  어느 방법을 사용하던지 예외 처리는 호가실히 해줘야 함.
             }
         }
         list.add(manager);
         save();
         return 1;
     }
+    
     public List<Manager> findAll() {
         return list;
     }
+    
     public Manager findByEmail(String email) {
         for(Manager item : list) {
             if(item.getEmail().equals(email)) {
@@ -94,6 +99,7 @@ public class ManagerFile2Dao implements ManagerDao {
         }
         return null;
     }
+    
     public int delete(String email) {
         for(Manager item : list) {
             if(item.getEmail().equals(email)) {

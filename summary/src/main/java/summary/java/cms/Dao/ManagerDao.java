@@ -7,7 +7,8 @@ import summary.java.cms.domain.Manager;
 
 @Component
 public interface ManagerDao {
-    int insert(Manager manager);
+    int insert(Manager manager)
+            throws MandatoryValueDaoException, DuplicationDaoException;
     List<Manager> findAll();
     Manager findByEmail(String email);
     int delete(String email);

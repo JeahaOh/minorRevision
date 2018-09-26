@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.Dao.DuplicationDaoException;
+import summary.java.cms.Dao.MandatoryValueDaoException;
 import summary.java.cms.Dao.TeacherDao;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Teacher;
@@ -43,6 +45,7 @@ public class TeacherFile2Dao implements TeacherDao {
             e.printStackTrace();
         }
     }
+    
     public TeacherFile2Dao() {
         this(defaultFileName);
     }
@@ -59,10 +62,17 @@ public class TeacherFile2Dao implements TeacherDao {
             e.printStackTrace();
         }
     }
-    public int insert(Teacher teacher) {
+    
+    public int insert(Teacher teacher)
+            throws MandatoryValueDaoException, DuplicationDaoException {
+        if(teacher.getName().length() == 0 ||
+                teacher.getEmail().length() == 0 ||
+                teacher.getPassword().length() == 0) {
+            throw new MandatoryValueDaoException("Missing Required Value Error");
+        }
         for (Teacher item : list) {
             if (item.getEmail().equals(teacher.getEmail())) {
-                return 0;
+                throw new DuplicationDaoException("The Email is already Exist.");
             }
         }
         list.add(teacher);

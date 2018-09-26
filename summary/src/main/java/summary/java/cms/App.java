@@ -55,7 +55,13 @@ public class App {
                 continue;
             }
             
+            try {
             mapping.getMethod().invoke(mapping.getInstance(), keyIn);
+            }   catch(Exception e) {
+                System.out.println("\n!!Erroe Occured!!");
+                System.out.println(e.getCause());
+            }
+            
         }
         keyIn.close();
     }

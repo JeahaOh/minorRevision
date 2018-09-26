@@ -1,7 +1,9 @@
 package summary.java.cms.control.manager;
 import java.util.Scanner;
 
+import summary.java.cms.Dao.DuplicationDaoException;
 import summary.java.cms.Dao.ManagerDao;
+import summary.java.cms.Dao.MandatoryValueDaoException;
 import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 import summary.java.cms.annotation.RequestMapping;
@@ -37,13 +39,14 @@ public class ManagerAddController {
             System.out.print("Position : ");
             m.setPosition(keyIn.nextLine());
             
-            int rtval = 0;
-            if((rtval = managerDao.insert(m)) > 0) {
-                System.out.println("Saved");
-            }   else if(rtval == -1) {
-                System.out.println("Same email adress is already exist.");
-            }   else {
-                System.out.println("Some Error Occured.");
+            try {
+                managerDao.insert(m);
+                System.out.println(m.getEmail() + " Has Saved..");
+            }   catch(MandatoryValueDaoException e) {
+                System.out.println("Add : Missing Required Value Error");
+            }   catch(DuplicationDaoException e) {
+                System.out.println("Add : The Email is already Exist.");
+                System.out.println(e.getMessage());
             }
             
             System.out.print("\nContinue? [Y/n] ");
