@@ -1,6 +1,7 @@
 package summary.java.cms.domain;
 
 public class Student extends Member{
+    private static final long serialVersionUID = 1L;
     protected String tel;
     protected String school;
     protected String major;

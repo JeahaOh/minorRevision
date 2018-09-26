@@ -15,21 +15,23 @@ import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Manager;
 
 @Component
-public class ManagerFile2Dao implements ManagerDao{
+public class ManagerFile2Dao implements ManagerDao {
     static String defaultFileName = "data/manager2.dat";
     //  모든클래스가 동일한값.
     String fileName;
     //  인스턴스 변수.
     private List<Manager> list = new ArrayList<>();
-     @SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public ManagerFile2Dao(String fileName) {
         this.fileName = fileName;
-         File dataFile = new File(fileName);
+        File dataFile = new File(fileName);
+
         try (
                 FileInputStream in0 = new FileInputStream(dataFile);
                 BufferedInputStream in1 = new BufferedInputStream(in0);
                 ObjectInputStream in = new ObjectInputStream(in1);
-//                ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataFile)));
+                //                ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataFile)));
                 ){
             list = (List<Manager>) in.readObject();
             while(true) {
@@ -40,16 +42,20 @@ public class ManagerFile2Dao implements ManagerDao{
                     break;
                 }
             }
-        }   catch(Exception e) {    }
+        }   catch(Exception e) {
+            e.printStackTrace();
+        }
     }
-     public ManagerFile2Dao() {
+    public ManagerFile2Dao() {
         //  Constructor 바로 아랫 줄은 주석 외에 다른 문장이 오면 안된다는것.
         this(defaultFileName);
     }
-     private void save() {
+    private void save() {
         File dataFile = new File(fileName);
         try (
-                ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(dataFile)));
+                ObjectOutputStream out = new ObjectOutputStream(
+                        new BufferedOutputStream(
+                                new FileOutputStream(dataFile)));
                 ){
             out.writeObject(list);
             //            for (Manager m : list) {
@@ -59,7 +65,7 @@ public class ManagerFile2Dao implements ManagerDao{
             e.printStackTrace();
         }
     }
-     public int insert(Manager manager) {
+    public int insert(Manager manager) {
         for(Manager item : list) {
             if(item.getEmail().equals(manager.getEmail())) {
                 return 0;
@@ -69,10 +75,10 @@ public class ManagerFile2Dao implements ManagerDao{
         save();
         return 1;
     }
-     public List<Manager> findAll() {
+    public List<Manager> findAll() {
         return list;
     }
-     public Manager findByEmail(String email) {
+    public Manager findByEmail(String email) {
         for(Manager item : list) {
             if(item.getEmail().equals(email)) {
                 return item;
@@ -80,7 +86,7 @@ public class ManagerFile2Dao implements ManagerDao{
         }
         return null;
     }
-     public int delete(String email) {
+    public int delete(String email) {
         for(Manager item : list) {
             if(item.getEmail().equals(email)) {
                 list.remove(item);
@@ -107,4 +113,4 @@ public class ManagerFile2Dao implements ManagerDao{
     ConcreteClass를 DataSnkStreamClass라고도 함.
      DecoratorPattern이 FileIO에 기본으로 깔려있고 알고 고려해서 사용하는게 존나 좋다.
     자바 기본 클래스들이 존나 고퀄리티로 만들어졌다는 반증임.
-  */
+ */

@@ -1,50 +1,53 @@
 package summary.java.cms.Dao.imple;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import summary.java.cms.Dao.StudentDao;
+import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Student;
 /*  DAO 분리.
     Data를 File에 저장하기 위한 DAO
  */
 
-//@Component
-public class StudentFileDao implements StudentDao {
+@Component
+public class StudentFile2Dao implements StudentDao {
+    static String defaultFileName = "data/Student2.dat";
+    String fileName;
     private List<Student> list = new ArrayList<>();
 
-    public StudentFileDao() {
-        try(    //  autoClose.
-                //  File dataFile = new File("data/student.dat");
-                //  FileReader fr = new FileReader(dataFile);
-                //  BufferedReader br = new BufferedReader(fr);
-                //  새줄을 한줄로 줄이는것. 106기 git에 설명있음.
-                BufferedReader in = new BufferedReader(
-                        new FileReader("data/student.dat"))
+    @SuppressWarnings("unchecked")
+    public StudentFile2Dao(String fileName) {
+        this.fileName = fileName;
+        File dataFile = new File(fileName);
+        
+        try(    
+                ObjectInputStream in = new ObjectInputStream(
+                        new BufferedInputStream(
+                                new FileInputStream(dataFile)));
                 ){
+            list = (List<Student>)in.readObject();
             while(true) {
-                String line = in.readLine();
-                if(line == null)
+                try {
+                    Student s = (Student)in.readObject();
+                    list.add(s);
+                }   catch(Exception e) {
                     break;
-                String[] values = line.split(",");
-
-                Student s = new Student();
-                s.setEmail(values[0]);
-                s.setName(values[1]);
-                s.setPassword(values[2]);
-                s.setSchool(values[3]);
-                s.setTel(values[4]);
-                s.setGraduate(Boolean.parseBoolean(values[5]));
-
-                list.add(s);
+                }
             }
         }   catch(Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public StudentFile2Dao() {
+        this(defaultFileName);
     }
 
     private void save() {

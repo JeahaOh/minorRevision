@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import summary.java.cms.Dao.TeacherDao;
-import summary.java.cms.annotation.Component;
 import summary.java.cms.domain.Teacher;
 
-@Component
+//@Component
 public class TeacherFileDao implements TeacherDao {
     private List<Teacher> list = new ArrayList<>();
 
