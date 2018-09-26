@@ -2,7 +2,6 @@ package summary.java.cms.context;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Set;
 
 import org.apache.ibatis.io.Resources;
 
-import summary.java.cms.annotation.Autowired;
 import summary.java.cms.annotation.Component;
 
 public class ApplicationContext {
@@ -34,39 +32,55 @@ public class ApplicationContext {
         //   클래스에 대해 인스턴스를 생성하여 objPool에 보관한다.
         createInstance();
 
-        //   objPool에 보관된 객체를 꺼내 @Autowired가 붙은 setter를 찾아 호출한다.
-        //   =>  의존 객체 주입.
-        injectDependency();
-
+        //  객체 생성 후에 실행할 작업이 있다면,
+        //  BeanPostProcessor 구현체를 찾아 실행한다.
+        callBeanPostProcessor();
     }   //  Constructor
 
-    private void injectDependency() {
-        // objPool에 보관된 객체 목록을 꺼낸다.
-        Collection<Object> objList = objPool.values();
-
-        for (Object obj : objList) {
-            // 목록에서 객체를 꺼내 @Autowired가 붙은 메서드를 찾는다.
-            Method[] methods = obj.getClass().getDeclaredMethods();
-            for (Method m : methods) {
-                //  Autowired 없다면,
-                if (!m.isAnnotationPresent(Autowired.class)) continue;
-
-                // setter 메서드의 파라미터 타입을 알아낸다.
-                Class<?> paramType = m.getParameterTypes()[0];
-
-                // 그 파라미터 타입과 일치하는 객체가 objPool에서 꺼낸다.
-                Object dependency = getBean(paramType);
-
-                if (dependency == null) continue;
-
-                try {
-                    m.invoke(obj, dependency);
-                    System.out.printf("\n Call %s()", m.getName());
-                } catch (Exception e) {}
-            }
-        }
+    public Object getBean(String name) {
+        //  objPool에서 주어진 이름의 객체를 찾아 리턴시킴.
+        return objPool.get(name);
     }
 
+    public Object getBean(Class<?> type) {
+        //  객체의 타입으로 objPool에 보관된 객체를 찾아 리턴한다.
+        Collection<Object> objList = objPool.values();
+        for (Object obj : objList) {
+            if(type.isInstance(obj))
+                return obj;
+        }
+        return null;
+    }
+
+    public String[] getBeanDefinitionNames() {
+        Set<String> keySet = objPool.keySet();
+        String[] names = new String[keySet.size()];
+        keySet.toArray(names);
+        return names;
+    }
+    
+    private void findClass(File path, String packagePath) {
+        File[] files = path.listFiles();
+        for(File file : files) {
+            if(file.isDirectory()) {
+                findClass(file, packagePath + "/" + file.getName());
+            }   else {
+                String className =
+                        (packagePath + "/" + file.getName())
+                        .replace("/", ".")
+                        .replace(".class", "");
+
+                try {
+                    //   클래스 이름 가지고 .class 파일을 찾아 메모리에 로딩.
+                    Class<?> clazz = Class.forName(className);
+                    classes.add(clazz);
+                }   catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }   //  for
+    }
+    
     private void createInstance() {
         for (Class<?> clazz : classes) {
             // => 인터페이스인 경우 무시한다.
@@ -98,54 +112,22 @@ public class ApplicationContext {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.printf("%s class doesn't have Constructor.", 
+                System.out.printf("%s class doesn't have Basic Constructor.\n", 
                         clazz.getName());
             }
         }
-
     }
 
-    private void findClass(File path, String packagePath) {
-        File[] files = path.listFiles();
-
-        for(File file : files) {
-            if(file.isDirectory()) {
-                findClass(file, packagePath + "/" + file.getName());
-            }   else {
-                String className =
-                        (packagePath + "/" + file.getName())
-                        .replace("/", ".")
-                        .replace(".class", "");
-
-                try {
-                    //   클래스 이름 가지고 .class 파일을 찾아 메모리에 로딩.
-                    Class<?> clazz = Class.forName(className);
-                    classes.add(clazz);
-                }   catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }   //  for
-    }
-    public Object getBean(String name) {
-        //  objPool에서 주어진 이름의 객체를 찾아 리턴시킴.
-        return objPool.get(name);
-    }
-
-    public Object getBean(Class<?> type) {
-        //  객체의 타입으로 objPool에 보관된 객체를 찾아 리턴한다.
+    private void callBeanPostProcessor() {
         Collection<Object> objList = objPool.values();
+        
+        // => objPool에 보관된 객체 중에서 BeanPostProcessor 규칙을 
+        //    준수하는 객체를 찾는다.
         for (Object obj : objList) {
-            if(type.isInstance(obj))
-                return obj;
+            if (!BeanPostProcessor.class.isInstance(obj)) continue;
+            
+            BeanPostProcessor processor = (BeanPostProcessor)obj;
+            processor.postProcess(this);
         }
-        return null;
-    }
-
-    public String[] getBeanDefinitionNames() {
-        Set<String> keySet = objPool.keySet();
-        String[] names = new String[keySet.size()];
-        keySet.toArray(names);
-        return names;
     }
 }
