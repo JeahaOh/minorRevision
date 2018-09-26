@@ -2,9 +2,11 @@ package summary.java.cms;
 import java.util.Scanner;
 
 import summary.java.cms.Dao.ManagerDao;
+import summary.java.cms.Dao.ManagerFileDao;
 import summary.java.cms.Dao.StudentDao;
 import summary.java.cms.Dao.StudentFileDao;
 import summary.java.cms.Dao.TeacherDao;
+import summary.java.cms.Dao.TeacherFileDao;
 import summary.java.cms.context.ApplicationContext;
 import summary.java.cms.context.RequestMappingHandlerMapping;
 import summary.java.cms.context.RequestMappingHandlerMapping.RequestMappingHandler;
@@ -19,8 +21,8 @@ public class App {
 */
     
     public static StudentDao studentDao = new StudentFileDao();
-    public static TeacherDao teacherDao = new TeacherDao();
-    public static ManagerDao managerDao = new ManagerDao();
+    public static TeacherDao teacherDao = new TeacherFileDao();
+    public static ManagerDao managerDao = new ManagerFileDao();
     static Scanner keyIn = new Scanner(System.in);
     
     public static void main(String[] args) throws Exception{
