@@ -1,6 +1,10 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## tag: v2.2
+
+- 예외처리 적용
+
 ## tag: v2.1
 
 - 객체 Serialize/Deserialize 적용

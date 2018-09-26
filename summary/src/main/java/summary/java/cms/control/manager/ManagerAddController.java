@@ -37,10 +37,13 @@ public class ManagerAddController {
             System.out.print("Position : ");
             m.setPosition(keyIn.nextLine());
             
-            if (managerDao.insert(m) > 0) {
-                System.out.println("Saved.");
-            } else {
-                System.out.println("The Email is already Exist.");
+            int rtval = 0;
+            if((rtval = managerDao.insert(m)) > 0) {
+                System.out.println("Saved");
+            }   else if(rtval == -1) {
+                System.out.println("Same email adress is already exist.");
+            }   else {
+                System.out.println("Some Error Occured.");
             }
             
             System.out.print("\nContinue? [Y/n] ");
