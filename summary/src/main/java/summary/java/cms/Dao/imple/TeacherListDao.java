@@ -1,12 +1,13 @@
-package summary.java.cms.Dao;
+package summary.java.cms.Dao.imple;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.Dao.TeacherDao;
 import summary.java.cms.domain.Teacher;
 
 //@Component
-public class TeacherListDao {
+public class TeacherListDao implements TeacherDao {
     private List<Teacher> list = new ArrayList<>();
 
     public int insert(Teacher teacher) {

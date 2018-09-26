@@ -1,4 +1,4 @@
-package summary.java.cms.Dao;
+package summary.java.cms.Dao.imple;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,11 +7,11 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import summary.java.cms.annotation.Component;
+import summary.java.cms.Dao.ManagerDao;
 import summary.java.cms.domain.Manager;
-
-@Component
-public class ManagerFileDao implements ManagerDao{
+//  comma seperate 저장법.
+//@Component
+public class ManagerFileDao implements ManagerDao {
     private List<Manager> list = new ArrayList<>();
 
     public ManagerFileDao() {

@@ -1,12 +1,13 @@
-package summary.java.cms.Dao;
+package summary.java.cms.Dao.imple;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import summary.java.cms.Dao.ManagerDao;
 import summary.java.cms.domain.Manager;
 
 //@Component
-public class ManagerListDao {
+public class ManagerListDao implements ManagerDao {
     private List<Manager> list = new ArrayList<>();
 
     public int insert(Manager manager) {

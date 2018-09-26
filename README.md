@@ -1,6 +1,12 @@
 # minorRevision
 자바 **요 약** 예제.
 
+## tag: v2.1
+
+- 객체 Serialize/Deserialize 적용
+- java.io.Serializable 인터페이스 활용
+- transient modifier 사용법
+
 ## tag: v2.0
 
 - DAO에 파일 입출력 도입
