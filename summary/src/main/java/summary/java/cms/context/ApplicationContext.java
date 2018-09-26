@@ -35,7 +35,7 @@ public class ApplicationContext {
         //  객체 생성 후에 실행할 작업이 있다면,
         //  BeanPostProcessor 구현체를 찾아 실행한다.
         callBeanPostProcessor();
-    }   //  Constructor
+    }
 
     public Object getBean(String name) {
         //  objPool에서 주어진 이름의 객체를 찾아 리턴시킴.

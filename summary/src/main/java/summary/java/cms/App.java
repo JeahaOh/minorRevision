@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import summary.java.cms.Dao.ManagerDao;
 import summary.java.cms.Dao.StudentDao;
+import summary.java.cms.Dao.StudentFileDao;
 import summary.java.cms.Dao.TeacherDao;
 import summary.java.cms.context.ApplicationContext;
 import summary.java.cms.context.RequestMappingHandlerMapping;
@@ -17,7 +18,7 @@ public class App {
             IoC EventController 실행을 역행, DI의 한 예.
 */
     
-    public static StudentDao studentDao = new StudentDao();
+    public static StudentDao studentDao = new StudentFileDao();
     public static TeacherDao teacherDao = new TeacherDao();
     public static ManagerDao managerDao = new ManagerDao();
     static Scanner keyIn = new Scanner(System.in);
